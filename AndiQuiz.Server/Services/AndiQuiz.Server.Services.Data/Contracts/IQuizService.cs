@@ -5,12 +5,12 @@
 
     public interface IQuizService
     {
-        QuizAnswer MakeAnswer(AnswerType answerType, string description, int questionId, int typeQuiz);
+        Answer MakeAnswer(AnswerType answerType, string description, int questionId, int typeQuiz);
 
-        QuizQuestion MakeQuestion(int quizType, string description);
+        Question MakeQuestion(int quizType, string description);
 
-        IQueryable<QuizQuestion> GetQuestionByQuizType(int typeQuiz);
+        IQueryable<Question> GetQuestionsForTest(int testId);
 
-        IQueryable<QuizTest> GetQuizTitles();
+        IQueryable<Test> GetQuizTitles();
     }
 }

@@ -8,13 +8,13 @@
 
     public static class Repositories
     {
-        public static IRepository<QuizQuestion> GetRealEstateRepository()
+        public static IRepository<Question> GetRealEstateRepository()
         {
-            var repository = new Mock<IRepository<QuizQuestion>>();
+            var repository = new Mock<IRepository<Question>>();
 
             repository.Setup(r => r.All()).Returns(() =>
             {
-                return new List<QuizQuestion>
+                return new List<Question>
                 {
                     //new QuizQuestion { Type = QuizType.IQ, Question = "B", UserId = "1", PublishedFor = AnswerType.Right, Address = "sajkd" },
                     //new QuizQuestion { Type = QuizType.Math, Question = "A", UserId = "2", PublishedFor = AnswerType.Wrong , Address = "sajkd" },

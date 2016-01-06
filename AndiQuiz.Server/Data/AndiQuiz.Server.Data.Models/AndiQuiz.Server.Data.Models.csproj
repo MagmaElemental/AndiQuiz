@@ -57,13 +57,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="QuizQuestion.cs" />
+    <Compile Include="Category.cs" />
+    <Compile Include="Question.cs" />
     <Compile Include="AnswerType.cs" />
-    <Compile Include="QuizTest.cs" />
-    <Compile Include="QuizAnswer.cs" />
+    <Compile Include="TestRating.cs" />
+    <Compile Include="Test.cs" />
+    <Compile Include="Answer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserAnswer.cs" />
+    <Compile Include="UserScore.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -4,7 +4,7 @@
     using AndiQuiz.Server.Api.Infrastructure.Mappings;
     using Data.Models;
 
-    public class AnswersDetailsResponseModel : IMapFrom<QuizAnswer>, IHaveCustomMappings
+    public class AnswersDetailsResponseModel : IMapFrom<Answer>, IHaveCustomMappings
     {
         //public int Id { get; set; }
 
@@ -18,11 +18,11 @@
 
         public void CreateMappings(IConfiguration configuration)
         {
-            configuration.CreateMap<QuizAnswer, AnswersDetailsResponseModel>()
+            configuration.CreateMap<Answer, AnswersDetailsResponseModel>()
                 //.ForMember(a => a.Id, opts => opts.MapFrom(a => a.Id))
-                .ForMember(a => a.Answer, opts => opts.MapFrom(a => a.Answer))
+                .ForMember(a => a.Answer, opts => opts.MapFrom(a => a.Content))
                 .ForMember(q => q.AnswerIs, opts => opts.MapFrom(q => q.AnswerIs))
-                .ForMember(q => q.QuizQuestionId, opts => opts.MapFrom(q => q.QuizQuestionId));
+                .ForMember(q => q.QuizQuestionId, opts => opts.MapFrom(q => q.QuestionId));
         }
     }
 }

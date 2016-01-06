@@ -4,14 +4,14 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class QuizQuestion
+    public class Question
     {
-        private ICollection<QuizAnswer> quizAnswers;
+        private ICollection<Answer> answers;
         private ICollection<UserAnswer> userAnswers;
 
-        public QuizQuestion()
+        public Question()
         {
-            this.quizAnswers = new HashSet<QuizAnswer>();
+            this.answers = new HashSet<Answer>();
             this.userAnswers = new HashSet<UserAnswer>();
         }
 
@@ -20,12 +20,12 @@
 
         [MaxLength(QuizConstants.QuestionMaxLength)]
         [MinLength(QuizConstants.QuestionMinLength)]
-        public string Question { get; set; }
+        public string Content { get; set; }
 
-        public virtual ICollection<QuizAnswer> QuizAnswers
+        public virtual ICollection<Answer> Answers
         {
-            get { return this.quizAnswers; }
-            set { this.quizAnswers = value; }
+            get { return this.answers; }
+            set { this.answers = value; }
         }
 
         public virtual ICollection<UserAnswer> UserAnswers
@@ -34,8 +34,8 @@
             set { this.userAnswers = value; }
         }
 
-        public int QuizTestId { get; set; }
+        public int TestId { get; set; }
 
-        public virtual QuizTest QuizTest { get; set; }
+        public virtual Test Test { get; set; }
     }
 }

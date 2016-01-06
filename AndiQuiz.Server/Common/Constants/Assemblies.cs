@@ -4,6 +4,6 @@
     {
         public const string WebApi = "AndiQuiz.Server.Api";
 
-        public const string DataServices = "UniversalQuizBackEnd.Services.Data";
+        public const string DataServices = "AndiQuiz.Server.Services.Data";
     }
 }

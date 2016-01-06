@@ -3,27 +3,31 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Common.Constants;
-
-    public class QuizTest
+    using System;
+    public class Test
     {
-        private ICollection<QuizQuestion> quizQuestion;
+        private ICollection<Question> questions;
 
-        public QuizTest()
+        public Test()
         {
-            this.quizQuestion = new HashSet<QuizQuestion>();
+            this.questions = new HashSet<Question>();
         }
 
         [Key]
         public int Id { get; set; }
 
+        public Guid UserId { get; set; }
+
+        public virtual User User { get; set; }
+
         [MaxLength(QuizConstants.QuestionMaxLength)]
         [MinLength(QuizConstants.QuestionMinLength)]
         public string Title { get; set; }
 
-        public virtual ICollection<QuizQuestion> QuizQuestion
+        public virtual ICollection<Question> Question
         {
-            get { return this.quizQuestion; }
-            set { this.quizQuestion = value; }
+            get { return this.questions; }
+            set { this.questions = value; }
         }
     }
 }

@@ -119,6 +119,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Api\AndiQuiz.Api\AndiQuiz.Server.Api.csproj">
+      <Project>{a9e2dad8-dca7-4547-8f3b-88f27a3d5c00}</Project>
+      <Name>AndiQuiz.Server.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Common\AndiQuiz.Server.Common.csproj">
       <Project>{181c5d8e-6576-46ee-834f-6dcaa1de7e99}</Project>
       <Name>AndiQuiz.Server.Common</Name>

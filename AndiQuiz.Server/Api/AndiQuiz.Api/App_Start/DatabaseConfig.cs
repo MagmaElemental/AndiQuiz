@@ -9,6 +9,7 @@
         public static void Initialize()
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<AndiQuizDbContext, Configuration>());
+            AndiQuizDbContext.Create().Database.Initialize(true);
         }
     }
 }

@@ -18,10 +18,10 @@
 
         public IDbSet<UserAnswer> UserAnswers { get; set; }
 
-        public IDbSet<QuizQuestion> QuizQuestions { get; set; }
+        public IDbSet<Question> QuizQuestions { get; set; }
 
-        public IDbSet<QuizAnswer> QuizAnswers { get; set; }
+        public IDbSet<Answer> QuizAnswers { get; set; }
 
-        public IDbSet<QuizTest> QuizTests { get; set; }
+        public IDbSet<Test> QuizTests { get; set; }
     }
 }

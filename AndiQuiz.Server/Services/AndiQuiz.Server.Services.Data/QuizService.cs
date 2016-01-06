@@ -7,27 +7,32 @@
 
     public class QuizService : IQuizService
     {
-        private readonly IRepository<QuizQuestion> questions;
-        private readonly IRepository<QuizAnswer> answers;
-        private readonly IRepository<QuizTest> quizTests;
+        private readonly IRepository<Question> questions;
+        private readonly IRepository<Answer> answers;
+        private readonly IRepository<Test> quizTests;
 
-        public QuizService(IRepository<QuizQuestion> questions, IRepository<QuizAnswer> answers, IRepository<QuizTest> quizTests)
+        public QuizService(IRepository<Question> questions, IRepository<Answer> answers, IRepository<Test> quizTests)
         {
             this.questions = questions;
             this.answers = answers;
             this.quizTests = quizTests;
         }
 
-        public IQueryable<QuizQuestion> GetQuestionByQuizType(int typeQuiz)
+        public IQueryable<Question> GetQuestionsForTest(int testId)
         {
             var resultQuestions = this.questions
                 .All()
-                .Where(q => q.QuizTestId == typeQuiz);
+                .Where(q => q.TestId == testId);
 
             return resultQuestions;
         }
 
-        public IQueryable<QuizTest> GetQuizTitles()
+        //public IQueryable<Test> GetAllTestNamesForCategory(Category category)
+        //{
+
+        //}
+
+        public IQueryable<Test> GetQuizTitles()
         {
             var resultTitles = this.quizTests
                 .All();
@@ -35,13 +40,18 @@
             return resultTitles;
         }
 
-        public QuizAnswer MakeAnswer(AnswerType answerType, string description, int questionId, int typeQuiz)
+        //public int GetScoreForExamAnswers(string jsonObject)
+        //{
+        //    var model = JsonConvert.DeserializeObject<TestAnswersBindingModel>
+        //}
+
+        public Answer MakeAnswer(AnswerType answerType, string description, int questionId, int testId)
         {
-            var newAnswer = new QuizAnswer
+            var newAnswer = new Answer
             {
-                QuizQuestionId = questionId,
+                QuestionId = questionId,
                 AnswerIs = answerType,
-                Answer = description
+                Content = description
             };
 
             this.answers.Add(newAnswer);
@@ -50,12 +60,12 @@
             return newAnswer;
         }
 
-        public QuizQuestion MakeQuestion(int quizType, string description)
+        public Question MakeQuestion(int quizType, string description)
         {
-            var newQuestion = new QuizQuestion
+            var newQuestion = new Question
             {
-                 QuizTestId = quizType,
-                 Question = description
+                 TestId = quizType,
+                 Content = description
             };
 
             this.questions.Add(newQuestion);

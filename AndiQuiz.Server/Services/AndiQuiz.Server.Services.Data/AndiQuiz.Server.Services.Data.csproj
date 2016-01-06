@@ -71,6 +71,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnswerService.cs" />
+    <Compile Include="Contracts\IAnswerService.cs" />
     <Compile Include="Contracts\IQuizService.cs" />
     <Compile Include="QuizService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
