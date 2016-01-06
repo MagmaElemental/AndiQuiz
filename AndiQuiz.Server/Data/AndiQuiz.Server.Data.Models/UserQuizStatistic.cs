@@ -1,17 +1,12 @@
 ﻿namespace AndiQuiz.Server.Data.Models
 {
-    using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public class QuizRating
+    public class UserQuizStatistic
     {
         [Key]
         public int Id { get; set; }
-
-        [Required]
-        [Range(1,5)]
-        public int Rate { get; set; }
         
         public string UserId { get; set; }
 
@@ -20,7 +15,13 @@
 
         [Required]
         public int QuizId { get; set; }
-        
+
         public virtual Quiz Quiz { get; set; }
+
+        [Required]
+        public int CorrectAnswers { get; set; }
+
+        [Required]
+        public int TotalQuizAnswers { get; set; }
     }
 }

@@ -22,8 +22,8 @@
             this.answer = answer;
         }
 
-        [Route("Score")]
         [HttpPost]
+        [Route("Score")]
         public IHttpActionResult GetQuizScore(QuizAnswersBindingModel model)
         {
             if (!this.ModelState.IsValid)
@@ -46,20 +46,20 @@
             return this.Ok(score);
         }
 
-        [Route("Questions/{quizType}")]
         [HttpGet]
-        public IHttpActionResult GetQuestionsByType(int quizId)
+        [Route("Questions/{quizId}")]
+        public IHttpActionResult GetQuestionsForQuiz(int quizId)
         {
-                var questionsResult = this.quiz
+            var questions = this.quiz
                 .GetQuestionsForQuiz(quizId)
                 .ProjectTo<QuestionsDetailsResponseModel>()
                 .ToList();
 
-            return this.Ok(questionsResult);
+            return this.Ok(questions);
         }
 
-        [Route("Titles")]
         [HttpGet]
+        [Route("Titles")]
         public IHttpActionResult GetQuizTitles()
         {
             var quizTitles = this.quiz

@@ -20,30 +20,29 @@
 
         public IQueryable<Question> GetQuestionsForQuiz(int quizId)
         {
-            var resultQuestions = this.questions
+            var questions = this.questions
                 .All()
                 .Where(q => q.QuizId == quizId);
 
-            return resultQuestions;
+            return questions;
         }
 
-        //public IQueryable<Test> GetAllTestNamesForCategory(Category category)
-        //{
+        public IQueryable<Quiz> GetAllQuizsForCategory(int categoryId)
+        {
+            var quizs = this.quizs
+                .All()
+                .Where(q => q.CategoryId == categoryId);
 
-        //}
+            return quizs;
+        }
 
         public IQueryable<Quiz> GetQuizTitles()
         {
-            var resultTitles = this.quizs
+            var titles = this.quizs
                 .All();
 
-            return resultTitles;
+            return titles;
         }
-
-        //public int GetScoreForExamAnswers(string jsonObject)
-        //{
-        //    var model = JsonConvert.DeserializeObject<TestAnswersBindingModel>
-        //}
 
         public Answer MakeAnswer(AnswerType answerType, string description, int questionId, int quizId)
         {

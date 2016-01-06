@@ -31,6 +31,11 @@
         [ForeignKey("QuizId")]
         public virtual Quiz Quiz { get; set; }
 
+        public string UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual User User { get; set; }
+
         public virtual ICollection<Answer> Answers
         {
             get { return this.answers; }

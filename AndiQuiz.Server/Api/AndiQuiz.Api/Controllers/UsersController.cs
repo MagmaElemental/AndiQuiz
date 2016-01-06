@@ -7,9 +7,31 @@
     using AutoMapper;
     using System.Net.Http;
     using Infrastructure.Validation;
+    using Models.Users;
+    using Services.Data.Contracts;
 
-    public class UsersController
+    [RoutePrefix("api/Users")]
+    public class UsersController : ApiController
     {
+        private readonly IUserService users;
 
+        public UsersController(IUserService users)
+        {
+            this.users = users;
+        }
+
+        [HttpGet]
+        [Route("{userId}")]
+        public IHttpActionResult GetUserDetails(string userId)
+        {
+            var user = this.users.GetUserById(userId);
+
+            var details = this.users
+                    .GetUserById(userId)
+                    .ProjectTo<UserDetailsResponseModel>()
+                    .FirstOrDefault();
+
+            return this.Ok(details);
+        }
     }
 }

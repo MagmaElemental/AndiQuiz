@@ -66,6 +66,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserAnswer.cs" />
+    <Compile Include="UserQuizStatistic.cs" />
     <Compile Include="UserScore.cs" />
   </ItemGroup>
   <ItemGroup>
