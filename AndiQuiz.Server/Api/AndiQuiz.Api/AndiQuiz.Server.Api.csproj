@@ -247,26 +247,26 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\Common\AndiQuiz.Server.Common.csproj">
       <Project>{181c5d8e-6576-46ee-834f-6dcaa1de7e99}</Project>
       <Name>AndiQuiz.Server.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Data\UniversalQuizBackEnd.Data.Models\AndiQuiz.Server.Data.Models.csproj">
+    <ProjectReference Include="..\..\Data\AndiQuiz.Server.Data.Models\AndiQuiz.Server.Data.Models.csproj">
       <Project>{c876458d-0358-44fd-a1cc-be14ac77cf6a}</Project>
       <Name>AndiQuiz.Server.Data.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Data\UniversalQuizBackEnd.Data\AndiQuiz.Server.Data.csproj">
+    <ProjectReference Include="..\..\Data\AndiQuiz.Server.Data\AndiQuiz.Server.Data.csproj">
       <Project>{6defbec3-46c4-4b30-bd6d-f7667022673b}</Project>
       <Name>AndiQuiz.Server.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\UniversalQuizBackEnd.Services.Data\AndiQuiz.Server.Services.csproj">
+    <ProjectReference Include="..\..\Services\AndiQuiz.Server.Services.Data\AndiQuiz.Server.Services.Data.csproj">
       <Project>{9b9447d8-7e82-4094-867d-5a7bd262cbb5}</Project>
-      <Name>AndiQuiz.Server.Services</Name>
+      <Name>AndiQuiz.Server.Services.Data</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="packages.config" />
-    <None Include="Project_Readme.html" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

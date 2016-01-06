@@ -1,9 +1,9 @@
-﻿namespace AndiQuiz.Server.Services
+﻿namespace AndiQuiz.Server.Services.Data
 {
     using System.Linq;
     using Contracts;
-    using Data.Models;
-    using Data.Repositories;
+    using Server.Data.Models;
+    using Server.Data.Repositories;
 
     public class QuizService : IQuizService
     {

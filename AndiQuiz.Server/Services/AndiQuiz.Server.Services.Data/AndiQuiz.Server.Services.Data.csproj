@@ -7,8 +7,8 @@
     <ProjectGuid>{9B9447D8-7E82-4094-867D-5A7BD262CBB5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AndiQuiz.Server.Services</RootNamespace>
-    <AssemblyName>AndiQuiz.Server.Services</AssemblyName>
+    <RootNamespace>AndiQuiz.Server.Services.Data</RootNamespace>
+    <AssemblyName>AndiQuiz.Server.Services.Data</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -84,11 +84,11 @@
       <Project>{181c5d8e-6576-46ee-834f-6dcaa1de7e99}</Project>
       <Name>AndiQuiz.Server.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Data\UniversalQuizBackEnd.Data.Models\AndiQuiz.Server.Data.Models.csproj">
+    <ProjectReference Include="..\..\Data\AndiQuiz.Server.Data.Models\AndiQuiz.Server.Data.Models.csproj">
       <Project>{c876458d-0358-44fd-a1cc-be14ac77cf6a}</Project>
       <Name>AndiQuiz.Server.Data.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Data\UniversalQuizBackEnd.Data\AndiQuiz.Server.Data.csproj">
+    <ProjectReference Include="..\..\Data\AndiQuiz.Server.Data\AndiQuiz.Server.Data.csproj">
       <Project>{6defbec3-46c4-4b30-bd6d-f7667022673b}</Project>
       <Name>AndiQuiz.Server.Data</Name>
     </ProjectReference>

@@ -5,7 +5,7 @@
     using Microsoft.AspNet.Identity;
     using AutoMapper.QueryableExtensions;
     using Models.Quiz;
-    using Services.Contracts;
+    using AndiQuiz.Server.Services.Data.Contracts;
 
     [RoutePrefix("api/Quiz")]
     public class QuizController : ApiController

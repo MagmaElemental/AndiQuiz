@@ -1,7 +1,7 @@
-﻿namespace AndiQuiz.Server.Services.Contracts
+﻿namespace AndiQuiz.Server.Services.Data.Contracts
 {
     using System.Linq;
-    using Data.Models;
+    using Server.Data.Models;
 
     public interface IQuizService
     {
