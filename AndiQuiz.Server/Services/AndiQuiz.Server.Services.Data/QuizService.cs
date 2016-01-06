@@ -9,20 +9,20 @@
     {
         private readonly IRepository<Question> questions;
         private readonly IRepository<Answer> answers;
-        private readonly IRepository<Test> quizTests;
+        private readonly IRepository<Quiz> quizs;
 
-        public QuizService(IRepository<Question> questions, IRepository<Answer> answers, IRepository<Test> quizTests)
+        public QuizService(IRepository<Question> questions, IRepository<Answer> answers, IRepository<Quiz> quizs)
         {
             this.questions = questions;
             this.answers = answers;
-            this.quizTests = quizTests;
+            this.quizs = quizs;
         }
 
-        public IQueryable<Question> GetQuestionsForTest(int testId)
+        public IQueryable<Question> GetQuestionsForQuiz(int quizId)
         {
             var resultQuestions = this.questions
                 .All()
-                .Where(q => q.TestId == testId);
+                .Where(q => q.QuizId == quizId);
 
             return resultQuestions;
         }
@@ -32,9 +32,9 @@
 
         //}
 
-        public IQueryable<Test> GetQuizTitles()
+        public IQueryable<Quiz> GetQuizTitles()
         {
-            var resultTitles = this.quizTests
+            var resultTitles = this.quizs
                 .All();
 
             return resultTitles;
@@ -45,7 +45,7 @@
         //    var model = JsonConvert.DeserializeObject<TestAnswersBindingModel>
         //}
 
-        public Answer MakeAnswer(AnswerType answerType, string description, int questionId, int testId)
+        public Answer MakeAnswer(AnswerType answerType, string description, int questionId, int quizId)
         {
             var newAnswer = new Answer
             {
@@ -64,7 +64,7 @@
         {
             var newQuestion = new Question
             {
-                 TestId = quizType,
+                 QuizId = quizType,
                  Content = description
             };
 

@@ -6,13 +6,13 @@
     using System.Linq;
     using System.Web;
 
-    public class TestAnswersBindingModel
+    public class QuizAnswersBindingModel
     {
         [Required]
         public string UserId { get; set; }
 
         [Required]
-        public int TestId { get; set; }
+        public int QuizId { get; set; }
 
         // answers Ids
         [Required]

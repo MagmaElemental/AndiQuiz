@@ -3,6 +3,7 @@
     using Common.Constants;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Question
     {
@@ -18,9 +19,17 @@
         [Key]
         public int Id { get; set; }
 
+        [Required]
+        [Column("Question")]
         [MaxLength(QuizConstants.QuestionMaxLength)]
         [MinLength(QuizConstants.QuestionMinLength)]
         public string Content { get; set; }
+
+        [Required]
+        public int QuizId { get; set; }
+
+        [ForeignKey("QuizId")]
+        public virtual Quiz Quiz { get; set; }
 
         public virtual ICollection<Answer> Answers
         {
@@ -33,9 +42,5 @@
             get { return this.userAnswers; }
             set { this.userAnswers = value; }
         }
-
-        public int TestId { get; set; }
-
-        public virtual Test Test { get; set; }
     }
 }

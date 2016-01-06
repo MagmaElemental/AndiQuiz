@@ -2,20 +2,23 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
-    public class UserScore
+    public class QuizRating
     {
         [Key]
         public int Id { get; set; }
 
-        public Guid UserId { get; set; }
+        [Required]
+        public string UserId { get; set; }
 
+        [ForeignKey("UserId")]
         public virtual User User { get; set; }
 
+        [Required]
         public int QuizId { get; set; }
 
+        [ForeignKey("QuizId")]
         public virtual Quiz Quiz { get; set; }
-
-        public DateTime AnsweredOn { get; set; }
     }
 }

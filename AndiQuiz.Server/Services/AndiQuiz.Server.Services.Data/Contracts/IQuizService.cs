@@ -9,8 +9,8 @@
 
         Question MakeQuestion(int quizType, string description);
 
-        IQueryable<Question> GetQuestionsForTest(int testId);
+        IQueryable<Question> GetQuestionsForQuiz(int testId);
 
-        IQueryable<Test> GetQuizTitles();
+        IQueryable<Quiz> GetQuizTitles();
     }
 }

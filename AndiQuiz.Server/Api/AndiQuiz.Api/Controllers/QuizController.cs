@@ -24,8 +24,13 @@
 
         [Route("Score")]
         [HttpPost]
-        public IHttpActionResult GetQuizScore(TestAnswersBindingModel model)
+        public IHttpActionResult GetQuizScore(QuizAnswersBindingModel model)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest(this.ModelState);
+            }
+
             var answers = this.answer.GetAnswersByIds(model.AnswersIds);
             this.answer.MakeUserAnswers(model.UserId, answers);
 
@@ -43,10 +48,10 @@
 
         [Route("Questions/{quizType}")]
         [HttpGet]
-        public IHttpActionResult GetQuestionsByType(int testId)
+        public IHttpActionResult GetQuestionsByType(int quizId)
         {
                 var questionsResult = this.quiz
-                .GetQuestionsForTest(testId)
+                .GetQuestionsForQuiz(quizId)
                 .ProjectTo<QuestionsDetailsResponseModel>()
                 .ToList();
 

@@ -8,14 +8,16 @@
     using System;
     public class AnswerService : IAnswerService
     {
+        private readonly IRepository<User> users;
         private readonly IRepository<Answer> answers;
         private readonly IRepository<UserAnswer> userAnswers;
 
-        public AnswerService(IRepository<Answer> answers, IRepository<UserAnswer> userAnswers)
+        public AnswerService(IRepository<User> users, IRepository<Answer> answers, IRepository<UserAnswer> userAnswers)
         {
             this.answers = answers;
             this.userAnswers = userAnswers;
-        }
+            this.users = users;
+    }
 
         public List<Answer> GetAnswersByIds(int[] answersIds)
         {
@@ -29,11 +31,13 @@
 
         public void MakeUserAnswers(string userId, List<Answer> answers)
         {
+            var user = this.users.GetById(userId);
+
             foreach (var answer in answers)
             {
                 var currentUserAnswer = new UserAnswer()
                 {
-                    UserId = Guid.Parse(userId),
+                    User = user,
                     QuestionId = answer.QuestionId,
                     AnswerId = answer.Id
                 };
