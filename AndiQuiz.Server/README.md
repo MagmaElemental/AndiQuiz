@@ -16,10 +16,10 @@
     ```js
     {
         "firstName":"John",
-        "lastName":"Doe"
+        "lastName":"Doee",
         "email":"user1@user1.com",
-        "password":"123",
-        "confirmPassword":"123"
+        "password":"123456",
+        "confirmPassword":"123456"
     }
     ```
 - **Get authorization token**
