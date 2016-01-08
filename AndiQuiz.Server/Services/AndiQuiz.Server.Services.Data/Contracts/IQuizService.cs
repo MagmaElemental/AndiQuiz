@@ -1,6 +1,7 @@
 ﻿namespace AndiQuiz.Server.Services.Data.Contracts
 {
     using System.Linq;
+    using System.Collections.Generic;
     using Server.Data.Models;
 
     public interface IQuizService
@@ -11,6 +12,6 @@
 
         IQueryable<Question> GetQuestionsForQuiz(int testId);
 
-        IQueryable<Quiz> GetQuizTitles();
+        IQueryable<Quiz> GetAllQuizs();
     }
 }

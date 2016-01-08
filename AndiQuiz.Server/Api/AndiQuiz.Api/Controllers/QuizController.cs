@@ -9,17 +9,20 @@
     using Newtonsoft.Json;
     using Data.Models;
     using System.Collections.Generic;
+    using Common.Constants;
 
     [RoutePrefix("api/Quiz")]
     public class QuizController : ApiController
     {
-        private readonly IQuizService quiz;
-        private readonly IAnswerService answer;
+        private readonly IQuizService quizs;
+        private readonly IAnswerService answers;
+        private readonly IUserService users;
 
-        public QuizController(IQuizService quiz, IAnswerService answer)
+        public QuizController(IQuizService quizs, IAnswerService answers, IUserService users)
         {
-            this.quiz = quiz;
-            this.answer = answer;
+            this.quizs = quizs;
+            this.answers = answers;
+            this.users = users;
         }
 
         [HttpPost]
@@ -31,8 +34,8 @@
                 return this.BadRequest(this.ModelState);
             }
 
-            var answers = this.answer.GetAnswersByIds(model.AnswersIds);
-            this.answer.MakeUserAnswers(model.UserId, answers);
+            var answers = this.answers.GetAnswersByIds(model.AnswersIds);
+            this.users.MakeUserAnswers(model.UserId, answers);
 
             var score = 0;
             foreach (var answer in answers)
@@ -43,14 +46,16 @@
                 }
             }
 
+            this.users.MakeUserStatistic(model.UserId, model.QuizId, score, answers.Count);
+
             return this.Ok(score);
         }
 
         [HttpGet]
-        [Route("Questions/{quizId}")]
+        [Route("{quizId}/Questions")]
         public IHttpActionResult GetQuestionsForQuiz(int quizId)
         {
-            var questions = this.quiz
+            var questions = this.quizs
                 .GetQuestionsForQuiz(quizId)
                 .ProjectTo<QuestionsDetailsResponseModel>()
                 .ToList();
@@ -58,14 +63,24 @@
             return this.Ok(questions);
         }
 
+        //[HttpGet]
+        //[Route("{quizId}")]
+        //public IHttpActionResult GetQuizDetails(int quizId)
+        //{
+        //    var quiz = this.quizs.GetAllRatingsForQuiz(quizId)
+        //        .ProjectTo <;
+        //}
+
         [HttpGet]
-        [Route("Titles")]
-        public IHttpActionResult GetQuizTitles()
+        [Route("all")]
+        public IHttpActionResult GetAllQuizDetails(int page = 1, int pageSize = GlobalConstants.DefaultPageSize)
         {
-            var quizTitles = this.quiz
-            .GetQuizTitles()
-            .ProjectTo<QuizTitleDetailsResponseModel>()
-            .ToList();
+            var quizTitles = this.quizs
+                .GetAllQuizs()
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ProjectTo<QuizTitleDetailsResponseModel>()
+                .ToList();
 
             return this.Ok(quizTitles);
         }

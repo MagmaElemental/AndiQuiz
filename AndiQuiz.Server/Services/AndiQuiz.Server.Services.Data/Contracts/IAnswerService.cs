@@ -7,7 +7,5 @@
     public interface IAnswerService
     {
         List<Answer> GetAnswersByIds(int[] answersIds);
-
-        void MakeUserAnswers(string userId, List<Answer> answers);
     }
 }

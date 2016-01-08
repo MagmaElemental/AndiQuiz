@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
+using AndiQuiz.Server.Common.Constants;
 
 namespace AndiQuiz.Server.Api.Models
 {
@@ -34,12 +35,24 @@ namespace AndiQuiz.Server.Api.Models
 
     public class RegisterBindingModel
     {
+        private const string ErrorMessageFormat = "The {0} must be at least {2} characters long.";
+
+        [Required]
+        [MinLength(QuizConstants.NameMinLength, ErrorMessage = ErrorMessageFormat)]
+        [StringLength(QuizConstants.NameMaxLength, ErrorMessage = ErrorMessageFormat)]
+        public string FirstName { get; set; }
+
+        [Required]
+        [MinLength(QuizConstants.NameMinLength, ErrorMessage = ErrorMessageFormat)]
+        [StringLength(QuizConstants.NameMaxLength, ErrorMessage = ErrorMessageFormat)]
+        public string LastName { get; set; }
+
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = ErrorMessageFormat, MinimumLength = 3)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }

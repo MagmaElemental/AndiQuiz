@@ -24,14 +24,42 @@
         [Route("{userId}")]
         public IHttpActionResult GetUserDetails(string userId)
         {
-            var user = this.users.GetUserById(userId);
+            var user = this.users.GetUserById(userId).FirstOrDefault();
+            if (user == null)
+            {
+                return this.BadRequest();
+            }
 
-            var details = this.users
-                    .GetUserById(userId)
-                    .ProjectTo<UserDetailsResponseModel>()
-                    .FirstOrDefault();
+            var userStatistics = this.users.GetAllStatisticsForUser(userId);
+            ulong answeredCorrectly = 0;
+            ulong totalAnswersGiven = 0;
+            foreach (var statistic in userStatistics)
+            {
+                answeredCorrectly += (ulong)statistic.CorrectAnswers;
+                totalAnswersGiven += (ulong)statistic.TotalQuizAnswers;
+            }
+
+            var details = new UserDetailsResponseModel()
+            {
+                UserId = user.Id,
+                UserName = user.UserName,
+                CorrectAnswers = answeredCorrectly,
+                TotalAnswers = totalAnswersGiven
+            };
+
 
             return this.Ok(details);
+        }
+
+        [HttpGet]
+        [Route("{userId}/quizs")]
+        public IHttpActionResult GetAllQuizsForUser(string userId)
+        {
+            var quizs = this.users
+                .GetAllQuizsForUser(userId)
+                .ToList();
+
+            return this.Ok(quizs);
         }
     }
 }

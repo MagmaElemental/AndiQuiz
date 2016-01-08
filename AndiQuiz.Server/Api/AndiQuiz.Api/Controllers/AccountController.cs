@@ -331,7 +331,12 @@ namespace AndiQuiz.Server.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new User() { UserName = model.Email, Email = model.Email };
+            var user = new User() {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                UserName = model.Email,
+                Email = model.Email
+            };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 

@@ -1,5 +1,6 @@
 ﻿namespace AndiQuiz.Server.Services.Data
 {
+    using System.Collections.Generic;
     using System.Linq;
     using Contracts;
     using Server.Data.Models;
@@ -36,12 +37,12 @@
             return quizs;
         }
 
-        public IQueryable<Quiz> GetQuizTitles()
+        public IQueryable<Quiz> GetAllQuizs()
         {
-            var titles = this.quizs
+            var quizs = this.quizs
                 .All();
 
-            return titles;
+            return quizs;
         }
 
         public Answer MakeAnswer(AnswerType answerType, string description, int questionId, int quizId)
