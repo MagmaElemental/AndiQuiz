@@ -1,5 +1,7 @@
 ## Class Diagram
 
+![AndiQuiz Class Diagram](https://github.com/MagmaElemental/AndiQuiz/blob/master/AndiQuiz.Server/ClassDiagram.jpg "AndiQuiz Class Diagram")
+
 ### Users
 
 - **Register a new user**
