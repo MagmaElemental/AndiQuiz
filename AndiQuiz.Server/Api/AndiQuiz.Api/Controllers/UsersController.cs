@@ -14,23 +14,30 @@
     public class UsersController : ApiController
     {
         private readonly IUserService users;
+        private readonly IUserStatisticService userStatistics;
+        private readonly IQuizService quizs;
 
-        public UsersController(IUserService users)
+        public UsersController(IUserService users, IUserStatisticService userStatistics, IQuizService quizs)
         {
             this.users = users;
+            this.userStatistics = userStatistics;
+            this.quizs = quizs;
         }
 
         [HttpGet]
         [Route("{userId}")]
-        public IHttpActionResult GetUserDetails(string userId)
+        public IHttpActionResult GetUserDetails(string userName)
         {
-            var user = this.users.GetUserById(userId).FirstOrDefault();
+            var user = this.users
+                .GetUserByUserName(userName)
+                .FirstOrDefault();
+
             if (user == null)
             {
                 return this.BadRequest();
             }
 
-            var userStatistics = this.users.GetAllStatisticsForUser(userId);
+            var userStatistics = this.userStatistics.GetAllStatisticsForUser(user);
             ulong answeredCorrectly = 0;
             ulong totalAnswersGiven = 0;
             foreach (var statistic in userStatistics)
@@ -53,10 +60,19 @@
 
         [HttpGet]
         [Route("{userId}/quizs")]
-        public IHttpActionResult GetAllQuizsForUser(string userId)
+        public IHttpActionResult GetAllQuizsForUser(string userName)
         {
-            var quizs = this.users
-                .GetAllQuizsForUser(userId)
+            var user = this.users
+                .GetUserByUserName(userName)
+                .FirstOrDefault();
+
+            if (user == null)
+            {
+                return this.BadRequest();
+            }
+
+            var quizs = this.quizs
+                .GetAllQuizsForUser(user)
                 .ToList();
 
             return this.Ok(quizs);

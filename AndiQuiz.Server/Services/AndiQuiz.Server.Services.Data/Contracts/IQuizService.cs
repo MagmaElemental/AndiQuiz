@@ -1,17 +1,16 @@
 ﻿namespace AndiQuiz.Server.Services.Data.Contracts
 {
     using System.Linq;
-    using System.Collections.Generic;
     using Server.Data.Models;
 
     public interface IQuizService
     {
-        Answer MakeAnswer(AnswerType answerType, string description, int questionId, int typeQuiz);
+        IQueryable<Question> GetQuestionsForQuiz(Quiz quiz);
 
-        Question MakeQuestion(int quizType, string description);
-
-        IQueryable<Question> GetQuestionsForQuiz(int testId);
+        IQueryable<Quiz> GetAllQuizsForUser(User user);
 
         IQueryable<Quiz> GetAllQuizs();
+
+        Quiz MakeQuiz(User user, string title, Category category);
     }
 }

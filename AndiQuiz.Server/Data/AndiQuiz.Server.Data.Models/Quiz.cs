@@ -26,7 +26,9 @@
         [MinLength(QuizConstants.QuestionMinLength)]
         [MaxLength(QuizConstants.QuestionMaxLength)]
         public string Title { get; set; }
-        
+
+        public DateTime CreatedOn { get; set; }
+
         [Required]
         public string UserId { get; set; }
 

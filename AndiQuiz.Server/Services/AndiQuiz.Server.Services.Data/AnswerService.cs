@@ -8,23 +8,40 @@
 
     public class AnswerService : IAnswerService
     {
-        private readonly IRepository<User> users;
         private readonly IRepository<Answer> answers;
 
-        public AnswerService(IRepository<User> users, IRepository<Answer> answers)
+        public AnswerService(IRepository<Answer> answers)
         {
-            this.users = users;
             this.answers = answers;
-    }
+        }
 
-        public List<Answer> GetAnswersByIds(int[] answersIds)
+        public IQueryable<Answer> GetAnswersByIds(int[] answersIds)
         {
             var resultQuestions = this.answers
                     .All()
-                    .Where(a => answersIds.Any(i => i == a.Id))
-                    .ToList();
+                    .Where(a => answersIds.Any(i => i == a.Id));
 
             return resultQuestions;
+        }
+        
+        /// <remarks>
+        /// instance of AnswerService must call method SaveAnswers(), otherwise they are not saved to the db, just added.
+        /// </remarks>
+        public void MakeAnswer(Question question, string description, bool answerType)
+        {
+            var newAnswer = new Answer
+            {
+                QuestionId = question.Id,
+                Content = description,
+                AnswerIs = answerType
+            };
+
+            this.answers.Add(newAnswer);
+        }
+
+        public void SaveAnswers()
+        {
+            this.answers.SaveChanges();
         }
     }
 }

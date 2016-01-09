@@ -10,7 +10,7 @@
         public int Id { get; set; }
 
         [Required]
-        public AnswerType AnswerIs { get; set; }
+        public bool AnswerIs { get; set; }
 
         [Required]
         [Column("Answer")]

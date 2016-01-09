@@ -227,9 +227,10 @@
     <Compile Include="Infrastructure\Validation\ValidateModelAttribute.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Quiz\AnswersDetailsResponceModel.cs" />
-    <Compile Include="Models\Quiz\QuestionsDetailsResponseModel.cs" />
-    <Compile Include="Models\Quiz\QuizTitleDetailsResponseModel.cs" />
+    <Compile Include="Models\Quiz\AnswerDetailsResponseModel.cs" />
+    <Compile Include="Models\Quiz\QuestionDetailsResponseModel.cs" />
+    <Compile Include="Models\Quiz\QuizCreateBindingModel.cs" />
+    <Compile Include="Models\Quiz\QuizDetailsResponseModel.cs" />
     <Compile Include="Models\Quiz\QuizAnswersBindingModel.cs" />
     <Compile Include="Models\Users\UserDetailsResponseModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

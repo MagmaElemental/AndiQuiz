@@ -59,7 +59,6 @@
   <ItemGroup>
     <Compile Include="Category.cs" />
     <Compile Include="Question.cs" />
-    <Compile Include="AnswerType.cs" />
     <Compile Include="QuizRating.cs" />
     <Compile Include="Quiz.cs" />
     <Compile Include="Answer.cs" />
@@ -67,7 +66,6 @@
     <Compile Include="User.cs" />
     <Compile Include="UserAnswer.cs" />
     <Compile Include="UserQuizStatistic.cs" />
-    <Compile Include="UserScore.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

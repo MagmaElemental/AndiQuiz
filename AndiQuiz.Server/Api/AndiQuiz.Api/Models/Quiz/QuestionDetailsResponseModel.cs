@@ -5,15 +5,15 @@
     using AndiQuiz.Server.Api.Infrastructure.Mappings;
     using Data.Models;
 
-    public class QuestionsDetailsResponseModel : IMapFrom<Question>, IHaveCustomMappings
+    public class QuestionDetailsResponseModel : IMapFrom<BindingQuestion>, IHaveCustomMappings
     {
         public string Question { get; set; }
 
-        public List<AnswersDetailsResponseModel> Answers { get; set; }
+        public IEnumerable<AnswerDetailsResponseModel> Answers { get; set; }
 
         public void CreateMappings(IConfiguration configuration)
         {
-            configuration.CreateMap<Question, QuestionsDetailsResponseModel>()
+            configuration.CreateMap<Question, QuestionDetailsResponseModel>()
                 .ForMember(q => q.Question, opts => opts.MapFrom(q => q.Content))
                 .ForMember(q => q.Answers, opts => opts.MapFrom(q => q.Answers));
         }

@@ -72,11 +72,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnswerService.cs" />
+    <Compile Include="CategoryService.cs" />
     <Compile Include="Contracts\IAnswerService.cs" />
+    <Compile Include="Contracts\ICategoryService.cs" />
+    <Compile Include="Contracts\IQuestionService.cs" />
     <Compile Include="Contracts\IQuizService.cs" />
+    <Compile Include="Contracts\IUserStatisticService.cs" />
+    <Compile Include="Contracts\IUserAnswerService.cs" />
     <Compile Include="Contracts\IUserService.cs" />
+    <Compile Include="QuestionService.cs" />
     <Compile Include="QuizService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserStatisticService.cs" />
+    <Compile Include="UserAnswerService.cs" />
     <Compile Include="UserService.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -16,20 +16,18 @@
             return new AndiQuizDbContext();
         }
 
-        public IDbSet<UserAnswer> UserAnswers { get; set; }
+        public IDbSet<Answer> Answers { get; set; }
+
+        public IDbSet<Category> Categories { get; set; }
 
         public IDbSet<Question> Questions { get; set; }
-
-        public IDbSet<Answer> Answers { get; set; }
 
         public IDbSet<Quiz> Quizs { get; set; }
 
         public IDbSet<QuizRating> QuizRatings { get; set; }
 
+        public IDbSet<UserAnswer> UserAnswers { get; set; }
+
         public IDbSet<UserQuizStatistic> UserQuizStatistics { get; set; }
-
-        public IDbSet<UserScore> UserScores { get; set; }
-
-        public IDbSet<Category> Categorys { get; set; }
     }
 }

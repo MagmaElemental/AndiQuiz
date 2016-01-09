@@ -1,31 +1,40 @@
 ﻿namespace AndiQuiz.Server.Services.Data
 {
-    using System.Collections.Generic;
     using System.Linq;
-    using Contracts;
     using Server.Data.Models;
     using Server.Data.Repositories;
-
+    using Contracts;
+    using System;
     public class QuizService : IQuizService
     {
+        private readonly IRepository<Quiz> quizs;
         private readonly IRepository<Question> questions;
         private readonly IRepository<Answer> answers;
-        private readonly IRepository<Quiz> quizs;
 
-        public QuizService(IRepository<Question> questions, IRepository<Answer> answers, IRepository<Quiz> quizs)
+        public QuizService(IRepository<Quiz> quizs, IRepository<Question> questions, IRepository<Answer> answers)
         {
+            this.quizs = quizs;
             this.questions = questions;
             this.answers = answers;
-            this.quizs = quizs;
         }
 
-        public IQueryable<Question> GetQuestionsForQuiz(int quizId)
+        public IQueryable<Question> GetQuestionsForQuiz(Quiz quiz)
         {
-            var questions = this.questions
+            var questions = this.quizs
                 .All()
-                .Where(q => q.QuizId == quizId);
+                .Where(q => q.Id == quiz.Id)
+                .SelectMany(q => q.Questions);
 
             return questions;
+        }
+
+        public IQueryable<Quiz> GetAllQuizsForUser(User user)
+        {
+            var quizs = this.quizs
+                .All()
+                .Where(q => q.UserId == user.Id);
+
+            return quizs;
         }
 
         public IQueryable<Quiz> GetAllQuizsForCategory(int categoryId)
@@ -40,38 +49,26 @@
         public IQueryable<Quiz> GetAllQuizs()
         {
             var quizs = this.quizs
-                .All();
+                .All()
+                .OrderByDescending(q => q.CreatedOn);
 
             return quizs;
         }
 
-        public Answer MakeAnswer(AnswerType answerType, string description, int questionId, int quizId)
+        public Quiz MakeQuiz(User user, string title, Category category)
         {
-            var newAnswer = new Answer
+            var quiz = new Quiz()
             {
-                QuestionId = questionId,
-                AnswerIs = answerType,
-                Content = description
+                UserId = user.Id,
+                CategoryId = category.Id,
+                Title = title,
+                CreatedOn = DateTime.Now
             };
 
-            this.answers.Add(newAnswer);
-            this.answers.SaveChanges();
+            this.quizs.Add(quiz);
+            this.quizs.SaveChanges();
 
-            return newAnswer;
-        }
-
-        public Question MakeQuestion(int quizType, string description)
-        {
-            var newQuestion = new Question
-            {
-                 QuizId = quizType,
-                 Content = description
-            };
-
-            this.questions.Add(newQuestion);
-            this.questions.SaveChanges();
-
-            return newQuestion;
+            return quiz;
         }
     }
 }
