@@ -10,5 +10,6 @@
         public const int AnswerMaxLength = 100;
         public const int CategoryNameMinLength = 2;
         public const int CategoryNameMaxLength = 20;
+        public const int TakeUserPersonalGamesPlayed = 10;
     }
 }

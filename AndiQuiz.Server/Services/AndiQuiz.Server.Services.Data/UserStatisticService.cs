@@ -22,7 +22,8 @@
         {
             var statistics = this.statistics
                 .All()
-                .Where(s => s.UserId == user.Id);
+                .Where(s => s.UserId == user.Id)
+                .OrderByDescending(s => s.CreatedOn);
 
             return statistics;
         }
@@ -34,7 +35,8 @@
                 UserId = user.Id,
                 QuizId = quizId,
                 CorrectAnswers = correctAnswers,
-                TotalQuizAnswers = totalAnswersInQuiz
+                TotalQuizAnswers = totalAnswersInQuiz,
+                CreatedOn = DateTime.Now
             };
 
             this.statistics.Add(newStatistic);

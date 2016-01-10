@@ -7,7 +7,10 @@
     using Models.Users;
     using Models.Quiz;
     using Services.Data.Contracts;
-
+    using System.Collections.Generic;
+    using Data.Models;
+    using AutoMapper;
+    using Models.UserQuizStatistic;
     [RoutePrefix("api/Users")]
     public class UsersController : ApiController
     {
@@ -47,37 +50,59 @@
         }
 
         [HttpGet]
+        [Authorize]
         [Route("{userName}", Order = 2)]
         public IHttpActionResult GetUserDetails(string userName)
         {
+            var currentUserName = this.User.Identity.Name;
             var user = this.users
                 .GetUserByUserName(userName)
                 .FirstOrDefault();
 
             if (user == null)
             {
-                return this.BadRequest();
+                return this.BadRequest(GlobalConstants.WrongUserNameErrorMessage);
             }
 
             var userStatistics = this.userStatistics
                 .GetAllStatisticsForUser(user)
                 .ToList();
 
+            var uniqueUserStatistics = new Dictionary<int, UserQuizStatistic>();
             ulong answeredCorrectly = 0;
             ulong totalAnswersGiven = 0;
             foreach (var statistic in userStatistics)
             {
+                if (!uniqueUserStatistics.ContainsKey(statistic.QuizId))
+                {
+                    uniqueUserStatistics.Add(statistic.QuizId, statistic);
+                }
+
                 answeredCorrectly += (ulong)statistic.CorrectAnswers;
                 totalAnswersGiven += (ulong)statistic.TotalQuizAnswers;
             }
 
             var details = new UserDetailsResponseModel()
             {
-                UserId = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 UserName = user.UserName,
                 CorrectAnswers = answeredCorrectly,
                 TotalAnswers = totalAnswersGiven
             };
+
+            // checking his own profile
+            // shows recently played games
+            if (currentUserName == userName)
+            {
+                var personalDetails = new PersonalUserDetailsResponseModel(details);
+
+                personalDetails.RecentlyPlayed = uniqueUserStatistics
+                    .Take(QuizConstants.TakeUserPersonalGamesPlayed)
+                    .Select(s => Mapper.Map<UserQuizStatisticResponseModel>(s.Value));
+
+                return this.Ok(personalDetails);
+            }
 
 
             return this.Ok(details);

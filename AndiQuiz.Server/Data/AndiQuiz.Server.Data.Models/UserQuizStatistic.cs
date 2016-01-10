@@ -1,5 +1,6 @@
 ﻿namespace AndiQuiz.Server.Data.Models
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,7 +16,7 @@
 
         [Required]
         public int QuizId { get; set; }
-
+        
         public virtual Quiz Quiz { get; set; }
 
         [Required]
@@ -23,5 +24,8 @@
 
         [Required]
         public int TotalQuizAnswers { get; set; }
+
+        [Required]
+        public DateTime CreatedOn { get; set; }
     }
 }

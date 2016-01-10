@@ -54,7 +54,7 @@
     | Header Key | Header Value |
     |---|---|
     | Authorization | Bearer ...TOKEN |
-
+    
     BODY:
     ```js
     {
@@ -64,6 +64,37 @@
       "TotalAnswers": 0
     }
     ```
+    
+    -   **When Authorization TOKEN corresponds to the username** (user is checking its own profile)
+    BODY:
+    ```js
+    {
+        "RecentlyPlayed": [
+            {
+              "Id": 5,
+              "QuizId": 2,
+              "QuizTitle": "C# Programming 102",
+              "CorrectAnswers": 2,
+              "TotalQuizAnswers": 2,
+              "CreatedOn": "2016-01-10T18:38:17.93"
+            },
+            {
+              "Id": 1,
+              "QuizId": 1,
+              "QuizTitle": "C# Programming 101",
+              "CorrectAnswers": 1,
+              "TotalQuizAnswers": 2,
+              "CreatedOn": "2016-01-10T18:37:36.707"
+            }
+        ],
+        "UserName": "test2",
+        "FirstName": "Johnn",
+        "LastName": "Doeee",
+        "CorrectAnswers": 4,
+        "TotalAnswers": 9
+    }
+    ```
+    
 -   **Get Quizzes made by user**
 
     GET: api/users/{userName}/quizzes?page=1&pageSize=2
@@ -294,22 +325,6 @@
     
     GET: api/category/it
 
-    BODY:
-    ```js
-    [
-        {
-            "Name": "IT",
-            "Quizzes": 7
-        }
-    ]
-    ```
-    
-- **Get all categories**
-
-    **PUBLIC**
-    
-    GET: api/category/all
-    
     BODY:
     ```js
     [

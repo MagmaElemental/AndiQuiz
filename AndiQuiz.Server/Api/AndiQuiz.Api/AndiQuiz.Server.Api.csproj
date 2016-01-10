@@ -237,6 +237,8 @@
     <Compile Include="Models\Quiz\QuizDetailsResponseModel.cs" />
     <Compile Include="Models\Answer\AnswerScoreBindingModel.cs" />
     <Compile Include="Models\QuizRate\QuizRateBindingModel.cs" />
+    <Compile Include="Models\UserQuizStatistic\UserQuizStatisticResponseModel.cs" />
+    <Compile Include="Models\Users\PersonalUserDetailsResponseModel.cs" />
     <Compile Include="Models\Users\UserDetailsResponseModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />

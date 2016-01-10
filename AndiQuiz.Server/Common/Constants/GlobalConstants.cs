@@ -14,6 +14,8 @@
 
         public const string WrongQuizErrorMessage = "There is no such quiz!";
 
+        public const string WrongUserNameErrorMessage = "There is no such user!";
+
         public const string NoQuizzesInDbErrorMessage = "Sorry currently there are no quizzes, maybe add one.";
 
         public const string WebApiAssemblyName = "AndiQuiz.Server.Api";

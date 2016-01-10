@@ -10,7 +10,7 @@
     public interface IUserStatisticService
     {
         IQueryable<UserQuizStatistic> GetAllStatisticsForUser(User user);
-        
+
         void MakeUserStatistic(User user, int quizId, int correctAnswers, int totalAnswersInQuiz);
     }
 }
