@@ -136,16 +136,23 @@
           "Title": "C# Programming 102",
           "CreatedBy": "testUser",
           "CreatedOn": "2016-01-10T02:58:05.85",
-          "Rating": "0",
-          "TimesPlayed": "0"
+	  "Rating": 4.5,
+	  "RatinsCount": 2,
+    
+	  "Questions": 2,
+    
+	  "TimesPlayed": 1
         },
         {
           "Id": 6,
           "Title": "C# Programming 101",
+	      "Category": "IT",
           "CreatedBy": "testUser",
           "CreatedOn": "2016-01-10T02:52:33.96",
-          "Rating": "0",
-          "TimesPlayed": "0"
+	      "Rating": 3.5,
+	      "RatinsCount": 2,
+	      "Questions": 2,
+	      "TimesPlayed": 1
         }
     ]
     ```
@@ -236,6 +243,7 @@
       "CreatedBy": "user1@user1.com",
       "CreatedOn": "2016-01-10T01:10:14.48",
       "Rating": 4.5,
+      "RatinsCount": 2,
       "Questions": 2,
       "TimesPlayed": 2
     }
@@ -260,6 +268,7 @@
       "CreatedBy": "user1@user1.com",
       "CreatedOn": "2016-01-10T01:10:14.48",
       "Rating": 4.5,
+      "RatinsCount": 2,
       "Questions": 2,
       "TimesPlayed": 2
     }
@@ -302,6 +311,7 @@
         "CreatedBy": "testUser",
         "CreatedOn": "2016-01-10T02:58:05.85",
         "Rating": "0",
+	    "RatinsCount": 2,
         "Questions": 2,
         "TimesPlayed": "0"
       }
@@ -436,6 +446,7 @@
           "CreatedBy": "testing",
           "CreatedOn": "2016-01-10T02:58:05.85",
           "Rating": 0,
+  	      "RatinsCount": 0,
           "Questions": 2,
           "TimesPlayed": 0
         },
@@ -446,6 +457,7 @@
           "CreatedBy": "testing",
           "CreatedOn": "2016-01-10T02:52:33.96",
           "Rating": 0,
+  	      "RatinsCount": 0,
           "Questions": 2,
           "TimesPlayed": 0
         }
