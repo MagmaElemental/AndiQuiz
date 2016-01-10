@@ -6,5 +6,7 @@
     public interface IUserService
     {
         IQueryable<User> GetUserByUserName(string userName);
+
+        IQueryable<User> GetAllUsers();
     }
 }

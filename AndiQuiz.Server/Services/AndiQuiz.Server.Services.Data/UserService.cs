@@ -16,6 +16,14 @@
             this.users = users;
         }
 
+        public IQueryable<User> GetAllUsers()
+        {
+            var users = this.users
+                .All();
+
+            return users;
+        }
+
         public IQueryable<User> GetUserByUserName(string userName)
         {
             var resultUser = this.users

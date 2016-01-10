@@ -73,6 +73,7 @@
 
             var categoriesDetails = this.categories
                 .GetAllCategories()
+                .OrderBy(c => c.Name)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ProjectTo<CategoryDetailsResponseModel>()

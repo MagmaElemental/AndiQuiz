@@ -61,9 +61,16 @@
                 category = this.categories.MakeCategory(model.Category);
             }
 
-            // TODO: Check for duplicate entries in db, BadRequest
             // creating quiz
             var quiz = this.quizzes
+                .GetQuizByTitle(model.Title)
+                .FirstOrDefault();
+            if (quiz != null)
+            {
+                return this.BadRequest(GlobalConstants.QuizAlreadyExistsErrorMessage);
+            }
+
+            quiz = this.quizzes
                 .MakeQuiz(user, model.Title, category);
 
             // creating questions for quiz
@@ -134,6 +141,27 @@
 
         [HttpGet]
         [Authorize]
+        public IHttpActionResult Get(string title)
+        {
+            var quiz = this.quizzes
+                .GetQuizByTitle(title)
+                .FirstOrDefault();
+            
+            if (quiz == null)
+            {
+                return this.BadRequest(GlobalConstants.WrongQuizErrorMessage);
+            }
+
+            var quizDetails = this.quizzes
+                .GetQuizById(quiz.Id)
+                .ProjectTo<QuizDetailsResponseModel>()
+                .FirstOrDefault();
+
+            return this.Ok(quizDetails);
+        }
+
+        [HttpGet]
+        [Authorize]
         [Route("{quizId}")]
         public IHttpActionResult GetQuizDetails(int quizId)
         {
@@ -193,8 +221,7 @@
         public IHttpActionResult GetQuestionsForQuiz(int quizId)
         {
             var quiz = this.quizzes
-                .GetAllQuizzes()
-                .Where(q => q.Id == quizId)
+                .GetQuizById(quizId)
                 .FirstOrDefault();
 
             if (quiz == null)
@@ -222,12 +249,33 @@
 
             var quizDetails = this.quizzes
                 .GetAllQuizzes()
+                .OrderByDescending(q => q.CreatedOn)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ProjectTo<QuizDetailsResponseModel>()
                 .ToList();
 
             return this.Ok(quizDetails);
+        }
+
+        [HttpGet]
+        [Route("All/Titles")]
+        public IHttpActionResult GetAllQuizTitles(int page = 1, int pageSize = GlobalConstants.DefaultPageSize)
+        {
+            if (this.quizzes.GetAllQuizzes().ToList().Count == 0)
+            {
+                return this.BadRequest(GlobalConstants.NoQuizzesInDbErrorMessage);
+            }
+
+            var titles = this.quizzes
+                .GetAllQuizzes()
+                .OrderBy(q => q.Title)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ProjectTo<QuizTitlesResponseModel>()
+                .ToList();
+
+            return this.Ok(titles);
         }
     }
 }

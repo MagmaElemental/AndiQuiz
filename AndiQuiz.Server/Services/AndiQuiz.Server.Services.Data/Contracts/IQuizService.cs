@@ -15,6 +15,8 @@
 
         IQueryable<Quiz> GetQuizById(int quizId);
 
+        IQueryable<Quiz> GetQuizByTitle(string title);
+
         void RateQuiz(Quiz quiz, User user, int Rating);
 
         Quiz MakeQuiz(User user, string title, Category category);

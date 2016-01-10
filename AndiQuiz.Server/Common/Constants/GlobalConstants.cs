@@ -18,6 +18,8 @@
 
         public const string NoQuizzesInDbErrorMessage = "Sorry currently there are no quizzes, maybe add one.";
 
+        public const string QuizAlreadyExistsErrorMessage = "This Title is already taken!";
+
         public const string WebApiAssemblyName = "AndiQuiz.Server.Api";
     }
 }

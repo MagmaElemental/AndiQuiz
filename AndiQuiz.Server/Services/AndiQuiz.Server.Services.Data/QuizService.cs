@@ -23,6 +23,15 @@
             this.ratings = ratings;
         }
 
+        public IQueryable<Quiz> GetQuizByTitle(string title)
+        {
+            var quiz = this.quizzes
+                .All()
+                .Where(q => q.Title == title);
+
+            return quiz;
+        }
+
         public IQueryable<Question> GetQuestionsForQuiz(Quiz quiz)
         {
             var questions = this.quizzes
@@ -56,8 +65,7 @@
         public IQueryable<Quiz> GetAllQuizzes()
         {
             var quizzes = this.quizzes
-                .All()
-                .OrderByDescending(q => q.CreatedOn);
+                .All();
 
             return quizzes;
         }

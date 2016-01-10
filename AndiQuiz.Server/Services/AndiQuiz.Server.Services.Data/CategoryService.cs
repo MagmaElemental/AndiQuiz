@@ -23,8 +23,7 @@
         public IQueryable<Category> GetAllCategories()
         {
             var categories = this.categories
-                .All()
-                .OrderBy(c => c.Name);
+                .All();
 
             return categories;
         }

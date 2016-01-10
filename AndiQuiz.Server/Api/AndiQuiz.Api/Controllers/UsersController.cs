@@ -27,6 +27,22 @@
 
         [HttpGet]
         [Authorize]
+        [Route("All")]
+        public IHttpActionResult GetAllUserNames(int page = 1, int pageSize = GlobalConstants.DefaultPageSize)
+        {
+            var userNames = this.users
+                .GetAllUsers()
+                .OrderBy(u => u.UserName)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ProjectTo<UserNamesResponseModel>()
+                .ToList();
+
+            return this.Ok(userNames);
+        }
+
+        [HttpGet]
+        [Authorize]
         [Route("{userName}/Quizzes", Order = 1)]
         public IHttpActionResult GetAllQuizzesForUser(string userName, int page = 1, int pageSize = GlobalConstants.DefaultPageSize)
         {

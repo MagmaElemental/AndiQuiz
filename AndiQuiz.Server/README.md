@@ -44,6 +44,29 @@
     | Header key | Header value |
     | --- | --- |
     | Authorization | bearer {*your access token here*} |
+    
+- **Get all userNames**
+
+    GET: api/users/all?page=1&pageSize=1
+
+    HEADERs:
+
+    | Header Key | Header Value |
+    |---|---|
+    | Authorization | Bearer ...TOKEN |
+    
+    BODY:
+    ```js
+    [
+      {
+        "UserName": "test1"
+      },
+      {
+        "UserName": "test2"
+      }
+    ]
+    ```
+
 
 -   **Get user details**
 
@@ -194,7 +217,7 @@
     }
     ```
     
-- **Get quiz details**
+- **Get quiz details by Id**
 
     GET: api/quiz/1
 
@@ -218,6 +241,48 @@
     }
     ```
     
+- **Get quiz details by Title**
+
+    GET: api/quiz?title=C%23+Programming+101
+
+    HEADERs:
+
+    | Header Key | Header Value |
+    |---|---|
+    | Authorization | Bearer ...TOKEN |
+
+    BODY:
+    ```js
+    {
+      "Id": 1,
+      "Title": "C# Programming 101",
+      "Category": "IT",
+      "CreatedBy": "user1@user1.com",
+      "CreatedOn": "2016-01-10T01:10:14.48",
+      "Rating": 4.5,
+      "Questions": 2,
+      "TimesPlayed": 2
+    }
+    ```
+    
+- **Get all quiz titles**
+
+    **PUBLIC**
+
+    GET: api/quiz/all/titles?page=1&pageSize=2
+
+    BODY:
+    ```js
+    [
+      {
+        "Title": "C# Programming 101"
+      },
+      {
+        "Title": "C# Programming 102"
+      }
+    ]
+    ```
+
 - **Get all quizzes**
 
     GET: api/quiz/all?page=1&pageSize=1
