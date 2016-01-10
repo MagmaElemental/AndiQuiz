@@ -62,7 +62,10 @@
                 return this.BadRequest();
             }
 
-            var userStatistics = this.userStatistics.GetAllStatisticsForUser(user);
+            var userStatistics = this.userStatistics
+                .GetAllStatisticsForUser(user)
+                .ToList();
+
             ulong answeredCorrectly = 0;
             ulong totalAnswersGiven = 0;
             foreach (var statistic in userStatistics)
