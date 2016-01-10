@@ -7,9 +7,9 @@
     {
         IQueryable<Question> GetQuestionsForQuiz(Quiz quiz);
 
-        IQueryable<Quiz> GetAllQuizsForUser(User user);
+        IQueryable<Quiz> GetAllQuizzesForUser(User user);
 
-        IQueryable<Quiz> GetAllQuizs();
+        IQueryable<Quiz> GetAllQuizzes();
 
         Quiz MakeQuiz(User user, string title, Category category);
     }

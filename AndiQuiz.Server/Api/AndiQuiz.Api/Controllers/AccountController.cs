@@ -334,7 +334,7 @@ namespace AndiQuiz.Server.Api.Controllers
             var user = new User() {
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                UserName = model.Email,
+                UserName = model.UserName,
                 Email = model.Email
             };
 

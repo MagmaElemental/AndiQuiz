@@ -6,11 +6,11 @@
 
     public class Category
     {
-        private ICollection<Quiz> quizs;
+        private ICollection<Quiz> quizzes;
 
         public Category()
         {
-            this.quizs = new HashSet<Quiz>();
+            this.quizzes = new HashSet<Quiz>();
         }
 
         [Key]
@@ -19,10 +19,10 @@
         [Required]
         public string Name { get; set; }
 
-        public virtual ICollection<Quiz> Quizs
+        public virtual ICollection<Quiz> Quizzes
         {
-            get { return this.quizs; }
-            set { this.quizs = value; }
+            get { return this.quizzes; }
+            set { this.quizzes = value; }
         }
     }
 }

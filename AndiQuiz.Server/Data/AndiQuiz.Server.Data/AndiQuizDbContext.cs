@@ -22,7 +22,7 @@
 
         public IDbSet<Question> Questions { get; set; }
 
-        public IDbSet<Quiz> Quizs { get; set; }
+        public IDbSet<Quiz> Quizzes { get; set; }
 
         public IDbSet<QuizRating> QuizRatings { get; set; }
 

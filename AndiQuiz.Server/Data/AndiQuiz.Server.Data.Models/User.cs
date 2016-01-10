@@ -11,16 +11,16 @@
     public class User : IdentityUser
     {
         private ICollection<UserQuizStatistic> quizStatistics;
-        private ICollection<Quiz> quizs;
-        private ICollection<QuizRating> quizsRating;
+        private ICollection<Quiz> quizzes;
+        private ICollection<QuizRating> quizzesRating;
         private ICollection<Question> questions;
         private ICollection<UserAnswer> answers;
 
         public User()
         {
             this.quizStatistics = new HashSet<UserQuizStatistic>();
-            this.quizs = new HashSet<Quiz>();
-            this.quizsRating = new HashSet<QuizRating>();
+            this.quizzes = new HashSet<Quiz>();
+            this.quizzesRating = new HashSet<QuizRating>();
             this.questions = new HashSet<Question>();
             this.answers = new HashSet<UserAnswer>();
         }
@@ -41,16 +41,16 @@
             set { this.quizStatistics = value; }
         }
 
-        public virtual ICollection<Quiz> Quizs
+        public virtual ICollection<Quiz> Quizzes
         {
-            get { return this.quizs; }
-            set { this.quizs = value; }
+            get { return this.quizzes; }
+            set { this.quizzes = value; }
         }
 
-        public virtual ICollection<QuizRating> QuizsRating
+        public virtual ICollection<QuizRating> QuizzesRating
         {
-            get { return this.quizsRating; }
-            set { this.quizsRating = value; }
+            get { return this.quizzesRating; }
+            set { this.quizzesRating = value; }
         }
 
         public virtual ICollection<Question> Questions

@@ -10,7 +10,7 @@
     [RoutePrefix("api/Quiz")]
     public class QuizController : ApiController
     {
-        private readonly IQuizService quizs;
+        private readonly IQuizService quizzes;
         private readonly IAnswerService answers;
         private readonly IUserService users;
         private readonly IUserAnswerService userAnswers;
@@ -18,7 +18,7 @@
         private readonly ICategoryService categories;
         private readonly IQuestionService questions;
 
-        public QuizController(IQuizService quizs,
+        public QuizController(IQuizService quizzes,
             IAnswerService answers,
             IUserService users,
             IUserAnswerService userAnswers,
@@ -26,7 +26,7 @@
             ICategoryService categories,
             IQuestionService questions)
         {
-            this.quizs = quizs;
+            this.quizzes = quizzes;
             this.answers = answers;
             this.users = users;
             this.userAnswers = userAnswers;
@@ -59,14 +59,15 @@
                 category = this.categories.MakeCategory(model.Category);
             }
 
+            // TODO: Check for duplicate entries in db, BadRequest
             // creating quiz
-            var quiz = this.quizs
+            var quiz = this.quizzes
                 .MakeQuiz(user, model.Title, category);
 
             // creating questions for quiz
             var questionsContent = model.Questions.Select(q => q.QuestionContent).ToList();
             this.questions.MakeQuestions(quiz, questionsContent);
-            var questionsAdded = this.quizs
+            var questionsAdded = this.quizzes
                 .GetQuestionsForQuiz(quiz)
                 .ToList();
 
@@ -134,8 +135,8 @@
         [Route("{quizId}/Questions")]
         public IHttpActionResult GetQuestionsForQuiz(int quizId)
         {
-            var quiz = this.quizs
-                .GetAllQuizs()
+            var quiz = this.quizzes
+                .GetAllQuizzes()
                 .Where(q => q.Id == quizId)
                 .FirstOrDefault();
 
@@ -144,7 +145,7 @@
                 return this.BadRequest();
             }
 
-            var questions = this.quizs
+            var questions = this.quizzes
                 .GetQuestionsForQuiz(quiz)
                 .ProjectTo<QuestionDetailsResponseModel>()
                 .ToList();
@@ -153,17 +154,18 @@
         }
 
         [HttpGet]
+        [Authorize]
         [Route("All")]
         public IHttpActionResult GetAllQuizDetails(int page = 1, int pageSize = GlobalConstants.DefaultPageSize)
         {
-            var quizTitles = this.quizs
-                .GetAllQuizs()
+            var quizDetails = this.quizzes
+                .GetAllQuizzes()
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ProjectTo<QuizDetailsResponseModel>()
                 .ToList();
 
-            return this.Ok(quizTitles);
+            return this.Ok(quizDetails);
         }
     }
 }

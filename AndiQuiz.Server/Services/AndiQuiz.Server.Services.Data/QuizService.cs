@@ -7,20 +7,20 @@
     using System;
     public class QuizService : IQuizService
     {
-        private readonly IRepository<Quiz> quizs;
+        private readonly IRepository<Quiz> quizzes;
         private readonly IRepository<Question> questions;
         private readonly IRepository<Answer> answers;
 
-        public QuizService(IRepository<Quiz> quizs, IRepository<Question> questions, IRepository<Answer> answers)
+        public QuizService(IRepository<Quiz> quizzes, IRepository<Question> questions, IRepository<Answer> answers)
         {
-            this.quizs = quizs;
+            this.quizzes = quizzes;
             this.questions = questions;
             this.answers = answers;
         }
 
         public IQueryable<Question> GetQuestionsForQuiz(Quiz quiz)
         {
-            var questions = this.quizs
+            var questions = this.quizzes
                 .All()
                 .Where(q => q.Id == quiz.Id)
                 .SelectMany(q => q.Questions);
@@ -28,31 +28,32 @@
             return questions;
         }
 
-        public IQueryable<Quiz> GetAllQuizsForUser(User user)
+        public IQueryable<Quiz> GetAllQuizzesForUser(User user)
         {
-            var quizs = this.quizs
+            var quizzes = this.quizzes
                 .All()
+                .OrderByDescending(q => q.CreatedOn)
                 .Where(q => q.UserId == user.Id);
 
-            return quizs;
+            return quizzes;
         }
 
-        public IQueryable<Quiz> GetAllQuizsForCategory(int categoryId)
+        public IQueryable<Quiz> GetAllQuizzesForCategory(int categoryId)
         {
-            var quizs = this.quizs
+            var quizzes = this.quizzes
                 .All()
                 .Where(q => q.CategoryId == categoryId);
 
-            return quizs;
+            return quizzes;
         }
 
-        public IQueryable<Quiz> GetAllQuizs()
+        public IQueryable<Quiz> GetAllQuizzes()
         {
-            var quizs = this.quizs
+            var quizzes = this.quizzes
                 .All()
                 .OrderByDescending(q => q.CreatedOn);
 
-            return quizs;
+            return quizzes;
         }
 
         public Quiz MakeQuiz(User user, string title, Category category)
@@ -65,8 +66,8 @@
                 CreatedOn = DateTime.Now
             };
 
-            this.quizs.Add(quiz);
-            this.quizs.SaveChanges();
+            this.quizzes.Add(quiz);
+            this.quizzes.SaveChanges();
 
             return quiz;
         }
