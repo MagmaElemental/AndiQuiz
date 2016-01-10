@@ -1,11 +1,12 @@
-﻿namespace AndiQuiz.Server.Api.Models.Quiz
+﻿namespace AndiQuiz.Server.Api.Models.Question
 {
     using AutoMapper;
     using System.Collections.Generic;
     using AndiQuiz.Server.Api.Infrastructure.Mappings;
     using Data.Models;
+    using Answer;
 
-    public class QuestionDetailsResponseModel : IMapFrom<BindingQuestion>, IHaveCustomMappings
+    public class QuestionDetailsResponseModel : IMapFrom<Question>, IHaveCustomMappings
     {
         public string Question { get; set; }
 

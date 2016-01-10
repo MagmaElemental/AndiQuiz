@@ -144,7 +144,74 @@
         ]
     }
     ```
+
+- **Rate quiz**
+
+    POST: api/quiz/1/rate
+
+    HEADERs:
+
+    | Header Key | Header Value |
+    |---|---|
+    | Content-Type | application/json |
+    | Authorization | Bearer ...TOKEN |
+
+    BODY:
+    ```js
+    {
+        "Rating": 5
+    }
+    ```
     
+- **Get quiz details**
+
+    GET: api/quiz/1
+
+    HEADERs:
+
+    | Header Key | Header Value |
+    |---|---|
+    | Authorization | Bearer ...TOKEN |
+
+    BODY:
+    ```js
+    {
+      "Id": 1,
+      "Title": "C# Programming 101",
+      "Category": "IT",
+      "CreatedBy": "user1@user1.com",
+      "CreatedOn": "2016-01-10T01:10:14.48",
+      "Rating": 4.5,
+      "Questions": 2,
+      "TimesPlayed": 2
+    }
+    ```
+    
+- **Get all quizzes**
+
+    GET: api/quiz/all?page=1&pageSize=1
+
+    HEADERs:
+
+    | Header Key | Header Value |
+    |---|---|
+    | Authorization | Bearer ...TOKEN |
+
+    BODY:
+    ```js
+    [
+      {
+        "Id": 7,
+        "Title": "C# Programming 102",
+        "CreatedBy": "testUser",
+        "CreatedOn": "2016-01-10T02:58:05.85",
+        "Rating": "0",
+        "Questions": 2,
+        "TimesPlayed": "0"
+      }
+    ]
+    ```
+
 - **Get quiz questions**
 
     GET: api/quiz/1/questions
@@ -218,10 +285,60 @@
     ```js
     1
     ```
-    
-- **Get all quizzes**
 
-    GET: api/quiz/all?page=1&pageSize=1
+### Categories
+
+- **Get category details**
+
+    **PUBLIC**
+    
+    GET: api/category/it
+
+    BODY:
+    ```js
+    [
+        {
+            "Name": "IT",
+            "Quizzes": 7
+        }
+    ]
+    ```
+    
+- **Get all categories**
+
+    **PUBLIC**
+    
+    GET: api/category/all
+    
+    BODY:
+    ```js
+    [
+        {
+            "Name": "IT",
+            "Quizzes": 7
+        }
+    ]
+    ```
+    
+- **Get all categories**
+
+    **PUBLIC**
+    
+    GET: api/category/all
+    
+    BODY:
+    ```js
+    [
+        {
+            "Name": "IT",
+            "Quizzes": 7
+        }
+    ]
+    ```
+
+- **Get quizzes for category**
+
+    GET: api/category/it/quizzes?page=1&pageSize=2
 
     HEADERs:
 
@@ -232,14 +349,25 @@
     BODY:
     ```js
     [
-      {
-        "Id": 7,
-        "Title": "C# Programming 102",
-        "CreatedBy": "testing",
-        "CreatedOn": "2016-01-10T02:58:05.85",
-        "Rating": "0",
-        "TimesPlayed": "0"
-      }
+        {
+          "Id": 7,
+          "Title": "C# Programming 102",
+          "Category": "IT",
+          "CreatedBy": "testing",
+          "CreatedOn": "2016-01-10T02:58:05.85",
+          "Rating": 0,
+          "Questions": 2,
+          "TimesPlayed": 0
+        },
+        {
+          "Id": 6,
+          "Title": "C# Programming 101",
+          "Category": "IT",
+          "CreatedBy": "testing",
+          "CreatedOn": "2016-01-10T02:52:33.96",
+          "Rating": 0,
+          "Questions": 2,
+          "TimesPlayed": 0
+        }
     ]
     ```
-    

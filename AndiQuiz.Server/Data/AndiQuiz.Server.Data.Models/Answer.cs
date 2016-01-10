@@ -14,8 +14,8 @@
 
         [Required]
         [Column("Answer")]
-        [MinLength(QuizConstants.MinAnswerLength)]
-        [MaxLength(QuizConstants.MaxAnswerLength)]
+        [MinLength(QuizConstants.AnswerMinLength)]
+        [MaxLength(QuizConstants.AnswerMaxLength)]
         public string Content { get; set; }
 
         [Required]

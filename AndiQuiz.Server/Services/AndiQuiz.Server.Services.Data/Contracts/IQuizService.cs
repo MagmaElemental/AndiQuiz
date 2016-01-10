@@ -9,8 +9,16 @@
 
         IQueryable<Quiz> GetAllQuizzesForUser(User user);
 
+        IQueryable<Quiz> GetAllQuizzesForCategory(Category category);
+
         IQueryable<Quiz> GetAllQuizzes();
 
+        IQueryable<Quiz> GetQuizById(int quizId);
+
+        void RateQuiz(Quiz quiz, User user, int Rating);
+
         Quiz MakeQuiz(User user, string title, Category category);
+
+        bool QuizExists(int quizId);
     }
 }

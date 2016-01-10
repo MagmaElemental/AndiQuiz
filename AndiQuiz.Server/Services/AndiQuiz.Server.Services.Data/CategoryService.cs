@@ -4,6 +4,7 @@
     using Server.Data.Models;
     using Server.Data.Repositories;
     using Contracts;
+    using System;
 
     public class CategoryService : ICategoryService
     {
@@ -14,12 +15,27 @@
             this.categories = categories;
         }
 
+        public bool CategoryExists(string categoryName)
+        {
+            return this.categories.All().Any(c => c.Name == categoryName);
+        }
+
         public IQueryable<Category> GetAllCategories()
         {
             var categories = this.categories
-                .All();
+                .All()
+                .OrderBy(c => c.Name);
 
             return categories;
+        }
+
+        public IQueryable<Category> GetCategoryByName(string categoryName)
+        {
+            var category = this.categories
+                .All()
+                .Where(c => c.Name == categoryName);
+
+            return category;
         }
 
         public Category MakeCategory(string name)

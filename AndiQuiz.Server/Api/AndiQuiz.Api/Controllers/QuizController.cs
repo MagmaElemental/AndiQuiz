@@ -1,11 +1,14 @@
 ﻿namespace AndiQuiz.Server.Api.Controllers
 {
-    using AutoMapper.QueryableExtensions;
     using System.Linq;
     using System.Web.Http;
-    using Common.Constants;
-    using Models.Quiz;
+    using AutoMapper.QueryableExtensions;
     using AndiQuiz.Server.Services.Data.Contracts;
+    using Common.Constants;
+    using Models.Answer;
+    using Models.Quiz;
+    using Models.Question;
+    using Models.QuizRate;
 
     [RoutePrefix("api/Quiz")]
     public class QuizController : ApiController
@@ -50,8 +53,7 @@
                 .FirstOrDefault();
 
             var category = this.categories
-                .GetAllCategories()
-                .Where(c => c.Name == model.Category)
+                .GetCategoryByName(model.Category)
                 .FirstOrDefault();
 
             if (category == null)
@@ -74,7 +76,7 @@
             // creating answers for questions
             foreach (var addedQuestion in questionsAdded)
             {
-                BindingAnswer[] questionAnswers;
+                AnswerCreateBindingModel[] questionAnswers;
                 foreach (var question in model.Questions)
                 {
                     if (question.QuestionContent == addedQuestion.Content)
@@ -98,7 +100,7 @@
         [HttpPost]
         [Authorize]
         [Route("Score")]
-        public IHttpActionResult GetQuizScore(QuizAnswersBindingModel model)
+        public IHttpActionResult GetQuizScore(AnswerScoreBindingModel model)
         {
             if (!this.ModelState.IsValid)
             {
@@ -132,6 +134,61 @@
 
         [HttpGet]
         [Authorize]
+        [Route("{quizId}")]
+        public IHttpActionResult GetQuizDetails(int quizId)
+        {
+            var quizExists = this.quizzes.QuizExists(quizId);
+            if (!quizExists)
+            {
+                return this.BadRequest(GlobalConstants.WrongQuizErrorMessage);
+            }
+
+            var quizDetails = this.quizzes
+                .GetQuizById(quizId)
+                .ProjectTo<QuizDetailsResponseModel>()
+                .FirstOrDefault();
+
+            return this.Ok(quizDetails);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("{quizId}/Rate")]
+        public IHttpActionResult RateQuiz(int quizId, QuizRateBindingModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest(this.ModelState);
+            }
+
+            var quizExists = this.quizzes.QuizExists(quizId);
+            if (!quizExists)
+            {
+                return this.BadRequest(GlobalConstants.WrongQuizErrorMessage);
+            }
+
+            var userName = this.User.Identity.Name;
+            var user = this.users
+                .GetUserByUserName(userName)
+                .FirstOrDefault();
+
+            var quiz = this.quizzes
+                .GetQuizById(quizId)
+                .FirstOrDefault();
+
+            var ratingAlreadyExists = quiz.Ratings.Any(r => r.QuizId == quiz.Id && r.UserId == user.Id && r.Rate == model.Rating);
+            if (ratingAlreadyExists)
+            {
+                return this.BadRequest();
+            }
+
+            this.quizzes.RateQuiz(quiz, user, model.Rating);
+
+            return this.Ok();
+        }
+
+        [HttpGet]
+        [Authorize]
         [Route("{quizId}/Questions")]
         public IHttpActionResult GetQuestionsForQuiz(int quizId)
         {
@@ -142,7 +199,7 @@
 
             if (quiz == null)
             {
-                return this.BadRequest();
+                return this.BadRequest(GlobalConstants.WrongQuizErrorMessage);
             }
 
             var questions = this.quizzes
@@ -158,6 +215,11 @@
         [Route("All")]
         public IHttpActionResult GetAllQuizDetails(int page = 1, int pageSize = GlobalConstants.DefaultPageSize)
         {
+            if (this.quizzes.GetAllQuizzes().ToList().Count == 0)
+            {
+                return this.BadRequest(GlobalConstants.NoQuizzesInDbErrorMessage);
+            }
+
             var quizDetails = this.quizzes
                 .GetAllQuizzes()
                 .Skip((page - 1) * pageSize)

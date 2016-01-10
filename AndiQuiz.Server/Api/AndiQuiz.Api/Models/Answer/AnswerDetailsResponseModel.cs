@@ -1,10 +1,10 @@
-﻿namespace AndiQuiz.Server.Api.Models.Quiz
+﻿namespace AndiQuiz.Server.Api.Models.Answer
 {
     using AutoMapper;
     using AndiQuiz.Server.Api.Infrastructure.Mappings;
     using Data.Models;
 
-    public class AnswerDetailsResponseModel : IMapFrom<BindingAnswer>, IHaveCustomMappings
+    public class AnswerDetailsResponseModel : IMapFrom<AnswerCreateBindingModel>, IHaveCustomMappings
     {
         // Needed for evaluation, evaluation is done when AnswerId is sent
         public int Id { get; set; }

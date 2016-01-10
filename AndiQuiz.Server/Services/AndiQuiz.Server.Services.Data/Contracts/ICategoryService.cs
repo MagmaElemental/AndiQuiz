@@ -11,6 +11,10 @@
     {
         IQueryable<Category> GetAllCategories();
 
+        IQueryable<Category> GetCategoryByName(string categoryName);
+
+        bool CategoryExists(string categoryName);
+
         Category MakeCategory(string name);
     }
 }

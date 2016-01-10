@@ -10,12 +10,17 @@
         private readonly IRepository<Quiz> quizzes;
         private readonly IRepository<Question> questions;
         private readonly IRepository<Answer> answers;
+        private readonly IRepository<QuizRating> ratings;
 
-        public QuizService(IRepository<Quiz> quizzes, IRepository<Question> questions, IRepository<Answer> answers)
+        public QuizService(IRepository<Quiz> quizzes,
+            IRepository<Question> questions,
+            IRepository<Answer> answers,
+            IRepository<QuizRating> ratings)
         {
             this.quizzes = quizzes;
             this.questions = questions;
             this.answers = answers;
+            this.ratings = ratings;
         }
 
         public IQueryable<Question> GetQuestionsForQuiz(Quiz quiz)
@@ -38,11 +43,12 @@
             return quizzes;
         }
 
-        public IQueryable<Quiz> GetAllQuizzesForCategory(int categoryId)
+        public IQueryable<Quiz> GetAllQuizzesForCategory(Category category)
         {
             var quizzes = this.quizzes
                 .All()
-                .Where(q => q.CategoryId == categoryId);
+                .OrderByDescending(q => q.CreatedOn)
+                .Where(q => q.CategoryId == category.Id);
 
             return quizzes;
         }
@@ -70,6 +76,49 @@
             this.quizzes.SaveChanges();
 
             return quiz;
+        }
+
+        public void RateQuiz(Quiz quiz, User user, int Rate)
+        {
+            var userRating = this.ratings
+                .All()
+                .Where(r => r.QuizId == quiz.Id && r.UserId == user.Id)
+                .FirstOrDefault();
+
+            if (userRating != null)
+            {
+                this.ratings.Delete(userRating);
+            }
+
+            var ratingToAdd = new QuizRating()
+            {
+                QuizId = quiz.Id,
+                UserId = user.Id,
+                Rate = Rate
+            };
+
+            this.ratings.Add(ratingToAdd);
+            this.ratings.SaveChanges();
+        }
+
+        public IQueryable<Quiz> GetQuizById(int quizId)
+        {
+            var quiz = this.quizzes
+                .All()
+                .Where(q => q.Id == quizId);
+
+            return quiz;
+        }
+
+        public bool QuizExists(int quizId)
+        {
+            var quiz = this.quizzes.GetById(quizId);
+            if (quiz == null)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

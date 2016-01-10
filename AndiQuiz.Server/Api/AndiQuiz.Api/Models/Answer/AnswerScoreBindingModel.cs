@@ -1,8 +1,8 @@
-﻿namespace AndiQuiz.Server.Api.Models.Quiz
+﻿namespace AndiQuiz.Server.Api.Models.Answer
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class QuizAnswersBindingModel
+    public class AnswerScoreBindingModel
     {
         [Required]
         public int QuizId { get; set; }

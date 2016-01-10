@@ -3,14 +3,11 @@
     using System.Linq;
     using System.Web.Http;
     using AutoMapper.QueryableExtensions;
-    using Microsoft.AspNet.Identity;
-    using AutoMapper;
-    using System.Net.Http;
-    using Infrastructure.Validation;
-    using Models.Users;
-    using Services.Data.Contracts;
-    using Models.Quiz;
     using Common.Constants;
+    using Models.Users;
+    using Models.Quiz;
+    using Services.Data.Contracts;
+
     [RoutePrefix("api/Users")]
     public class UsersController : ApiController
     {
@@ -27,7 +24,7 @@
 
         [HttpGet]
         [Authorize]
-        [Route("{userName}/quizzes", Order = 1)]
+        [Route("{userName}/Quizzes", Order = 1)]
         public IHttpActionResult GetAllQuizzesForUser(string userName, int page = 1, int pageSize = GlobalConstants.DefaultPageSize)
         {
             var user = this.users
