@@ -6,12 +6,34 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.magmaelemental.andiquiz.MainActivityFragment"
+    tools:context=".fragments.MainActivityFragment"
     tools:showIn="@layout/activity_main">
 
-    <TextView
+    <!--<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="@string/welcome_msg"
+        android:textSize="50sp"
+        android:textAlignment="center"
+        android:textColor="@color/colorWelcome"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/welcomeTextView" />-->
+
+    <Button
+        style="?android:borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_quiz_msg"
+        android:id="@+id/button"
+
+        android:textSize="40sp"
+        android:textAlignment="center"
+        android:textColor="@color/colorWelcome"
+        android:onClick="navigateToLogin"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <!--android:layout_below="@+id/welcomeTextView"-->
 
 </RelativeLayout>
