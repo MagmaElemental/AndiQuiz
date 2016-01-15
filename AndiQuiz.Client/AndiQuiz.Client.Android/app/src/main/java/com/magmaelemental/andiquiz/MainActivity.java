@@ -52,6 +52,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void navigateToLogin(View view) {
-        // TODO: Create login/Register activity
+        // TODO: Create login/Register activity - check if user exists and has token and if so -> send him to quiz page. Otherwize -> go to Login/Register page
     }
 }
