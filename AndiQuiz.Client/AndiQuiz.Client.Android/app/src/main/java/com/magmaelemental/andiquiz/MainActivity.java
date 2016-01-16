@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         moveToLogin(view);
 
         // if there is user and TOKEN
-        // moveToProfile(view)
+        //moveToProfile(view);
 
         // if no user
         // moveToRegister(view)
@@ -65,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void moveToLogin(View view) {
         Intent moveNext = new Intent(this, LoginActivity.class);
+        startActivity(moveNext);
+    }
+
+    public void moveToProfile(View view) {
+        Intent moveNext = new Intent(this, ProfileActivity.class);
         startActivity(moveNext);
     }
 }

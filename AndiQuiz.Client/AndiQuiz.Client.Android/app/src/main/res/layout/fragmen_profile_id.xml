@@ -1,0 +1,35 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" />
+
+
+<!--<RelativeLayout-->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:id="@+id/imageView"-->
+        <!--android:layout_gravity="center_horizontal|bottom"-->
+         <!--/>-->
+
+        <!--<Button-->
+            <!--android:id="@+id/btn_fragment_2"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Go To 2"-->
+            <!--android:onClick="navigateToFragment"/>-->
+
+        <!--<Button-->
+            <!--android:id="@+id/btn_fragment_3"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Go To 3"-->
+            <!--android:onClick="navigateToFragment"/>-->
+
+<!--</RelativeLayout>-->
