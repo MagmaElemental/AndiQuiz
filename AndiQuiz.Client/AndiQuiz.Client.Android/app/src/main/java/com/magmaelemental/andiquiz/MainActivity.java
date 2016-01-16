@@ -1,5 +1,6 @@
 package com.magmaelemental.andiquiz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -51,7 +52,22 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void navigateToLogin(View view) {
+    public void navigateTo(View view) {
         // TODO: Create login/Register activity - check if user exists and has token and if so -> send him to quiz page. Otherwize -> go to Login/Register page
+
+        // if there is no TOKEN in the Db ->
+        moveToLogin(view);
+
+        // if there is user and TOKEN
+        // moveToProfile(view)
+
+        // if no user
+        // moveToRegister(view)
+
+    }
+
+    public void moveToLogin(View view) {
+        Intent moveNext = new Intent(this, LoginActivity.class);
+        startActivity(moveNext);
     }
 }
