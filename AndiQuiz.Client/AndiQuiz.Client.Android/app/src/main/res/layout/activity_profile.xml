@@ -3,26 +3,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <LinearLayout
+        android:id="@+id/imageContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/profileImage"
-        android:layout_gravity="center_horizontal|bottom"
-        android:contentDescription="image" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <ImageView
+    android:layout_width="150dp"
+    android:layout_height="150dp"
+    android:id="@+id/photo_taken"
+    android:contentDescription="image"
+        android:maxHeight="150dp"
+        android:maxWidth="150dp"
+        android:layout_margin="20dp"/>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Your Profile"
-        android:id="@+id/tvProfile" />
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Your Profile Data"
+        android:textSize="50sp"
+    android:id="@+id/tvProfile"/>
+
+    </LinearLayout>
+
+
+    <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:id="@+id/profileImage"-->
+        <!--android:layout_gravity="center_horizontal|bottom"-->
+        <!--android:contentDescription="image" />-->
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Your Profile"-->
+        <!--android:id="@+id/tvProfile"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_alignRight="@+id/linearLayout"-->
+        <!--android:layout_alignEnd="@+id/linearLayout" />-->
 
     <LinearLayout
+        android:layout_below="@+id/imageContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
+        android:id="@+id/linearLayout">
 
         <Button
             android:id="@+id/btn_update_image"
@@ -48,6 +76,7 @@
             android:onClick="moveToFindQuiz"/>
 
     </LinearLayout>
+
 
 </RelativeLayout>
 
