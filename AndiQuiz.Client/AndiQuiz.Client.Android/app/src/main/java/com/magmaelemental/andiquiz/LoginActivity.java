@@ -159,6 +159,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 showProgress(false);
                                 moveToMain(mLoginFormView);
+                                finish();
                             }
                         });
 
