@@ -27,9 +27,10 @@
     <string name="login_message">Welcome to AndiQuiz!</string>
     <string name="title_activity_start_up">StartUpActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
-
-    <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
+
+    <!-- Data Strings -->
+    <string name="error_wrong_input">Oops. No such data, please try again!</string>
 </resources>

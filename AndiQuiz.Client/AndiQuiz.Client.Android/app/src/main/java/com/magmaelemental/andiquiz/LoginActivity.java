@@ -53,17 +53,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
-
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
     private FetchDataTask mAuthTask = null;
 
     // UI references.
@@ -104,9 +93,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: implement to attempt to login
-                //attemptLogin();
-                moveToProfile(view);
+                attemptLogin();
             }
         });
 
@@ -162,21 +149,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
     private void attemptLogin() {
         if (mAuthTask != null) {
             return;
         }
 
-        // Reset errors.
         mUsernameView.setError(null);
         mPasswordView.setError(null);
 
-        // Store values at the time of the login attempt.
         final String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
 
@@ -190,7 +170,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             cancel = true;
         }
 
-        // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
@@ -198,32 +177,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
             showProgress(true);
             mAuthTask = new FetchDataTask(new FetchDataTask.TaskDoneListener() {
                 @Override
                 public void onDone(String result1) {
                     try {
-                        System.out.println("~~~~~~~~~~ PARSING ACCESS TOKEN");
                         accessToken = dataParser.getAccessTokenFromJson(result1);
-                        System.out.println("~~~~~~~~~~ GOT ACCESS TOKEN");
-                        System.out.println("~~~~~~~~~~ " + accessToken.getToken());
-                        System.out.println("~~~~~~~~~~ STARTING TO GET USER DETAILS");
                         FetchDataTask userDetailsTask = new FetchDataTask(new FetchDataTask.TaskDoneListener() {
                             @Override
                             public void onDone(String result) {
-                                System.out.println("~~~~~~~~~~ GOT USER DETAILS");
                                 UserPersonalDetails personalDetails = null;
                                 try {
-                                    System.out.println("~~~~~~~~~~ PARSING USER DETAILS");
                                     personalDetails = dataParser.getUserPersonalDetailsFromJson(result);
-                                    System.out.println("~~~~~~~~~~ PARSED USER DETAILS");
-                                    System.out.println("~~~~~~~~~~ ADDING USER DETAILS TO LOCAL DB");
                                     dbAdapter.insertData(personalDetails.getFirstName(),
                                             personalDetails.getLastName(),
                                             username,
@@ -232,25 +199,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                             accessToken.getToken(),
                                             accessToken.getExpiresInSeconds(),
                                             true);
-                                    System.out.println("~~~~~~~~~~ ADDED USER DETAILS TO LOCAL DB");
                                 } catch (JSONException e) {
-
-                                    System.out.println("~~~~~~~~~~ THROWS ON PARSING");
                                     e.printStackTrace();
                                 }
 
-                                System.out.println("~~~~~~~~~~ GETTING LAST ENTRY");
-                                UserInfo lastEntry = dbAdapter.getLastDataEntry();
-                                System.out.println("~~~~~~~~~~ GOT LAST ENTRY");
-                                System.out.println(lastEntry.getTotalAnswers());
                                 showProgress(false);
+                                moveToProfile(mLoginFormView);
                             }
                         });
 
-                        userDetailsTask.execute("api/users/" + username, "GET", accessToken.getToken());
-
+                        userDetailsTask.execute("api/users/" + username, "GET", accessToken.getToken(), "", "");
                     } catch (JSONException e) {
-                        mPasswordView.setError(getString(R.string.error_incorrect_password));
+                        mPasswordView.setError(getString(R.string.error_wrong_input));
                         mPasswordView.requestFocus();
                     }
 
@@ -260,7 +220,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
             });
 
-            mAuthTask.execute("token", "POST", username, password);
+            mAuthTask.execute("token", username, password);
         }
     }
 

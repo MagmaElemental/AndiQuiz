@@ -13,18 +13,13 @@ public class DataParser {
     public static AccessToken getAccessTokenFromJson(String accessTokenJsonString) throws JSONException {
         final String ACCESS_TOKEN = "access_token";
         final String EXPIRES_IN = "expires_in";
-        final String USERNAME = "username";
+        final String USERNAME = "userName";
 
         System.out.println(accessTokenJsonString);
         JSONObject accessTokenJson = new JSONObject(accessTokenJsonString);
         String token = accessTokenJson.getString(ACCESS_TOKEN);
-
-
-        System.out.println("~~~~~~~~~~ GETTING INT");
-        int expiresIn = accessTokenJson.getInt(EXPIRES_IN);
-        System.out.println("~~~~~~~~~~ GOT INT");
+        Integer expiresIn = accessTokenJson.getInt(EXPIRES_IN);
         String username = accessTokenJson.getString(USERNAME);
-
         AccessToken accessToken = new AccessToken(token,expiresIn,username);
 
         return accessToken;
