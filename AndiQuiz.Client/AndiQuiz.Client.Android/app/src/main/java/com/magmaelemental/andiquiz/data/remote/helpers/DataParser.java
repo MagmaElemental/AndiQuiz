@@ -15,7 +15,6 @@ public class DataParser {
         final String EXPIRES_IN = "expires_in";
         final String USERNAME = "userName";
 
-        System.out.println(accessTokenJsonString);
         JSONObject accessTokenJson = new JSONObject(accessTokenJsonString);
         String token = accessTokenJson.getString(ACCESS_TOKEN);
         Integer expiresIn = accessTokenJson.getInt(EXPIRES_IN);

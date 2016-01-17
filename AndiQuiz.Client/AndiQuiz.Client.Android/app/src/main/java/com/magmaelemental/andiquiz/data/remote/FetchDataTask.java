@@ -56,7 +56,7 @@ public class FetchDataTask extends AsyncTask<String, Void, String> {
                 String authorizationToken = params[4];
                 String requestBodyString = params[3];
                 MediaType mediaType;
-                if (params[2] == "json") {
+                if (params[2] == "JSON") {
                     mediaType = MEDIA_TYPE_JSON;
                 } else {
                     mediaType = MEDIA_TYPE_QUERY;

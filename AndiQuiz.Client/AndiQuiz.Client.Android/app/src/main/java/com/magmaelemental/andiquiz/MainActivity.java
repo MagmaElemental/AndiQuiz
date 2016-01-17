@@ -2,10 +2,12 @@ package com.magmaelemental.andiquiz;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,19 +49,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void navigateTo(View view) {
-        // TODO: Create login/Register activity - check if user exists and has token and if so -> send him to quiz page. Otherwize -> go to Login/Register page
-
-        // if there is no TOKEN in the Db ->
-        //moveToLogin(view);
-
-        // if there is user and TOKEN
-        //moveToProfile(view);
-
-        // if no user
-        // moveToRegister(view)
-
     }
 }
