@@ -9,9 +9,6 @@ import android.widget.TextView;
 
 import com.magmaelemental.andiquiz.R;
 
-/**
- * Created by JeDI on 1/17/2016.
- */
 public class ProfileIdFragment extends Fragment {
     public static final String TEXT = "text";
     public static final String STEP_NUMBER = "number";
