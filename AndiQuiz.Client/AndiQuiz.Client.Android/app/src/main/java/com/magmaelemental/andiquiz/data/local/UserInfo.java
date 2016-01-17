@@ -7,16 +7,18 @@ public class UserInfo {
     private String FirstName;
     private String LastName;
     private String UserName;
-    private String Email;
+    private Integer CorrectAnswers;
+    private Integer TotalAnswers;
     private String Token;
     private Date TokenExpirationDate;
     private Boolean IsLoggedIn;
 
-    public UserInfo(String firstName, String lastName, String userName, String email, String token, Date tokenExpirationDate, Boolean isLoggedIn) {
+    public UserInfo(String firstName, String lastName, String userName, Integer correctAnswers, Integer totalAnswers, String token, Date tokenExpirationDate, Boolean isLoggedIn) {
         this.FirstName = firstName;
         this.LastName = lastName;
         this.UserName = userName;
-        this.Email = email;
+        this.CorrectAnswers = correctAnswers;
+        this.TotalAnswers = totalAnswers;
         this.Token = token;
         this.TokenExpirationDate = tokenExpirationDate;
         this.IsLoggedIn = isLoggedIn;
@@ -34,8 +36,12 @@ public class UserInfo {
         return UserName;
     }
 
-    public String getEmail() {
-        return Email;
+    public Integer getCorrectAnswers() {
+        return CorrectAnswers;
+    }
+
+    public Integer getTotalAnswers() {
+        return TotalAnswers;
     }
 
     public String getToken() {

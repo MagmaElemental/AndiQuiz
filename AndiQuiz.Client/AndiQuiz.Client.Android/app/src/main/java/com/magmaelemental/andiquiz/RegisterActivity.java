@@ -3,7 +3,6 @@ package com.magmaelemental.andiquiz;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -30,15 +29,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.magmaelemental.andiquiz.data.local.QuizDbAdapter;
-import com.magmaelemental.andiquiz.data.local.UserInfo;
-import com.magmaelemental.andiquiz.data.remote.FetchDataTask;
-import com.magmaelemental.andiquiz.data.remote.helpers.DataParser;
-import com.magmaelemental.andiquiz.data.remote.models.AccessToken;
-import com.magmaelemental.andiquiz.data.remote.models.UserPersonalDetails;
-
-import org.json.JSONException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +37,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class RegisterActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -64,29 +54,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private FetchDataTask mAuthTask = null;
+    private UserLoginTask mAuthTask = null;
 
     // UI references.
-    private AutoCompleteTextView mUsernameView;
+    private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
 
-    private static final DataParser dataParser = new DataParser();
-    private final QuizDbAdapter dbAdapter = new QuizDbAdapter(this);
-    private Button registerButton;
-    private AccessToken accessToken;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
+        setupActionBar();
         // Set up the login form.
-        mUsernameView = (AutoCompleteTextView) findViewById(R.id.username);
+        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
-
-        registerButton = (Button) findViewById(R.id.register_button);
-        registerButton.setOnClickListener(registerButtonListener);
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -100,7 +83,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.log_in_button);
+        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,7 +111,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             return true;
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(mUsernameView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
                     .setAction(android.R.string.ok, new View.OnClickListener() {
                         @Override
                         @TargetApi(Build.VERSION_CODES.M)
@@ -156,6 +139,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     /**
+     * Set up the {@link android.app.ActionBar}, if the API is available.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private void setupActionBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            // Show the Up button in the action bar.
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
@@ -166,27 +160,31 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // Reset errors.
-        mUsernameView.setError(null);
+        mEmailView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        final String username = mUsernameView.getText().toString();
+        String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(username) && !isUsernameValid(username)) {
-            mPasswordView.setError(getString(R.string.error_invalid_username));
+        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+            mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
         }
 
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(email)) {
+            mEmailView.setError(getString(R.string.error_field_required));
+            focusView = mEmailView;
+            cancel = true;
+        } else if (!isEmailValid(email)) {
+            mEmailView.setError(getString(R.string.error_invalid_username));
+            focusView = mEmailView;
             cancel = true;
         }
 
@@ -198,73 +196,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new FetchDataTask(new FetchDataTask.TaskDoneListener() {
-                @Override
-                public void onDone(String result1) {
-                    try {
-                        System.out.println("~~~~~~~~~~ PARSING ACCESS TOKEN");
-                        accessToken = dataParser.getAccessTokenFromJson(result1);
-                        System.out.println("~~~~~~~~~~ GOT ACCESS TOKEN");
-                        System.out.println("~~~~~~~~~~ " + accessToken.getToken());
-                        System.out.println("~~~~~~~~~~ STARTING TO GET USER DETAILS");
-                        FetchDataTask userDetailsTask = new FetchDataTask(new FetchDataTask.TaskDoneListener() {
-                            @Override
-                            public void onDone(String result) {
-                                System.out.println("~~~~~~~~~~ GOT USER DETAILS");
-                                UserPersonalDetails personalDetails = null;
-                                try {
-                                    System.out.println("~~~~~~~~~~ PARSING USER DETAILS");
-                                    personalDetails = dataParser.getUserPersonalDetailsFromJson(result);
-                                    System.out.println("~~~~~~~~~~ PARSED USER DETAILS");
-                                    System.out.println("~~~~~~~~~~ ADDING USER DETAILS TO LOCAL DB");
-                                    dbAdapter.insertData(personalDetails.getFirstName(),
-                                            personalDetails.getLastName(),
-                                            username,
-                                            personalDetails.getCorrectAnswers(),
-                                            personalDetails.getTotalAnswers(),
-                                            accessToken.getToken(),
-                                            accessToken.getExpiresInSeconds(),
-                                            true);
-                                    System.out.println("~~~~~~~~~~ ADDED USER DETAILS TO LOCAL DB");
-                                } catch (JSONException e) {
-
-                                    System.out.println("~~~~~~~~~~ THROWS ON PARSING");
-                                    e.printStackTrace();
-                                }
-
-                                System.out.println("~~~~~~~~~~ GETTING LAST ENTRY");
-                                UserInfo lastEntry = dbAdapter.getLastDataEntry();
-                                System.out.println("~~~~~~~~~~ GOT LAST ENTRY");
-                                System.out.println(lastEntry.getTotalAnswers());
-                                showProgress(false);
-                            }
-                        });
-
-                        userDetailsTask.execute("api/users/" + username, "GET", accessToken.getToken());
-
-                    } catch (JSONException e) {
-                        mPasswordView.setError(getString(R.string.error_incorrect_password));
-                        mPasswordView.requestFocus();
-                    }
-
-                    mAuthTask = null;
-                    showProgress(false);
-                    finish();
-                }
-            });
-
-            mAuthTask.execute("token", "POST", username, password);
+            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask.execute((Void) null);
         }
     }
 
-    private boolean isUsernameValid(String username) {
+    private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return username.length() >= 6;
+        return email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() >= 6;
+        return password.length() > 4;
     }
 
     /**
@@ -340,11 +284,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(LoginActivity.this,
+                new ArrayAdapter<>(RegisterActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
-        mUsernameView.setAdapter(adapter);
+        mEmailView.setAdapter(adapter);
     }
+
 
     private interface ProfileQuery {
         String[] PROJECTION = {
@@ -372,7 +317,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
+            // TODO: attempt authentication against a network service.
 
+            try {
+                // Simulate network access.
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                return false;
+            }
+
+            for (String credential : DUMMY_CREDENTIALS) {
+                String[] pieces = credential.split(":");
+                if (pieces[0].equals(mEmail)) {
+                    // Account exists, return true if the password matches.
+                    return pieces[1].equals(mPassword);
+                }
+            }
+
+            // TODO: register the new account here.
             return true;
         }
 
@@ -395,13 +357,5 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
         }
     }
-
-    private View.OnClickListener registerButtonListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent newQuizIntent = new Intent(v.getContext(), RegisterActivity.class);
-            startActivity(newQuizIntent);
-        }
-    };
 }
 

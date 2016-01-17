@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         // TODO: Create login/Register activity - check if user exists and has token and if so -> send him to quiz page. Otherwize -> go to Login/Register page
 
         // if there is no TOKEN in the Db ->
-        moveToLogin(view);
+        //moveToLogin(view);
 
         // if there is user and TOKEN
         // moveToProfile(view)
@@ -61,10 +61,5 @@ public class MainActivity extends AppCompatActivity {
         // if no user
         // moveToRegister(view)
 
-    }
-
-    public void moveToLogin(View view) {
-        Intent moveNext = new Intent(this, LoginActivity.class);
-        startActivity(moveNext);
     }
 }

@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -18,7 +19,8 @@ public class QuizDbAdapter {
             QuizDbHelper.FIRST_NAME,
             QuizDbHelper.LAST_NAME,
             QuizDbHelper.USERNAME,
-            QuizDbHelper.EMAIL,
+            QuizDbHelper.CORRECT_ANSWERS,
+            QuizDbHelper.TOTAL_ANSWERS,
             QuizDbHelper.TOKEN,
             QuizDbHelper.TOKEN_EXPIRATION_TIME_IN_SECONDS,
             QuizDbHelper.IS_LOGGED_IN
@@ -33,11 +35,11 @@ public class QuizDbAdapter {
     public long insertData(String firstName,
                            String lastName,
                            String userName,
-                           String email,
+                           Integer correctAnswers,
+                           Integer totalAnswers,
                            String token,
                            Integer tokenExpirationTimeInSeconds,
-                           Boolean isLoggedIn)
-    {
+                           Boolean isLoggedIn) {
         Calendar calendar = Calendar.getInstance(); // gets a calendar using the default time zone and locale.
         calendar.add(Calendar.SECOND, tokenExpirationTimeInSeconds);
         Date date = calendar.getTime();
@@ -47,7 +49,8 @@ public class QuizDbAdapter {
         contentValues.put(QuizDbHelper.FIRST_NAME, firstName);
         contentValues.put(QuizDbHelper.LAST_NAME, lastName);
         contentValues.put(QuizDbHelper.USERNAME, userName);
-        contentValues.put(QuizDbHelper.EMAIL, email);
+        contentValues.put(QuizDbHelper.CORRECT_ANSWERS, correctAnswers);
+        contentValues.put(QuizDbHelper.TOTAL_ANSWERS, totalAnswers);
         contentValues.put(QuizDbHelper.TOKEN, token);
         contentValues.put(QuizDbHelper.TOKEN_EXPIRATION_TIME_IN_SECONDS, date.getTime());
         contentValues.put(QuizDbHelper.IS_LOGGED_IN, isLoggedIn);
@@ -56,13 +59,13 @@ public class QuizDbAdapter {
         return id;
     }
 
-    public ArrayList<UserInfo> getAllData(){
+    public ArrayList<UserInfo> getAllData() {
         SQLiteDatabase db = helper.getWritableDatabase();
 
         Cursor cursor = db.query(QuizDbHelper.TABLE_NAME, ALL_DATA_COLUMNS, null, null, null, null, null);
         ArrayList<UserInfo> data = new ArrayList<UserInfo>();
 
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             UserInfo userInfo = this.createUserInfoFromCursor(cursor);
             data.add(userInfo);
         }
@@ -70,13 +73,13 @@ public class QuizDbAdapter {
         return data;
     }
 
-    public ArrayList<UserInfo> getDataByUserName(String username){
+    public ArrayList<UserInfo> getDataByUserName(String username) {
         SQLiteDatabase db = helper.getWritableDatabase();
 
         Cursor cursor = db.query(QuizDbHelper.TABLE_NAME, ALL_DATA_COLUMNS, QuizDbHelper.USERNAME + " = '" + username + "'", null, null, null, null);
         ArrayList<UserInfo> data = new ArrayList<UserInfo>();
 
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
 
             UserInfo userInfo = this.createUserInfoFromCursor(cursor);
 
@@ -88,10 +91,12 @@ public class QuizDbAdapter {
 
     public UserInfo getLastDataEntry() {
         SQLiteDatabase db = helper.getWritableDatabase();
-
         Cursor cursor = db.query(QuizDbHelper.TABLE_NAME, ALL_DATA_COLUMNS, null, null, null, null, QuizDbHelper.UID + " DESC");
-        cursor.moveToNext();
-        UserInfo userInfo = this.createUserInfoFromCursor(cursor);
+        UserInfo userInfo = null;
+        if (cursor.getCount() > 0) {
+            cursor.moveToNext();
+            userInfo = this.createUserInfoFromCursor(cursor);
+        }
 
         return userInfo;
     }
@@ -106,32 +111,36 @@ public class QuizDbAdapter {
         int index3 = cursor.getColumnIndex(QuizDbHelper.USERNAME);
         String userName = cursor.getString(index3);
 
-        int index4 = cursor.getColumnIndex(QuizDbHelper.EMAIL);
-        String email = cursor.getString(index4);
+        int index4 = cursor.getColumnIndex(QuizDbHelper.CORRECT_ANSWERS);
+        Integer correctAnswers = cursor.getInt(index4);
 
-        int index5 = cursor.getColumnIndex(QuizDbHelper.TOKEN);
-        String token = cursor.getString(index5);
+        int index5 = cursor.getColumnIndex(QuizDbHelper.TOTAL_ANSWERS);
+        Integer totalAnswers = cursor.getInt(index5);
 
-        int index6 = cursor.getColumnIndex(QuizDbHelper.TOKEN_EXPIRATION_TIME_IN_SECONDS);
-        Date tokenExpirationDate = new Date(cursor.getLong(index6));
+        int index6 = cursor.getColumnIndex(QuizDbHelper.TOKEN);
+        String token = cursor.getString(index6);
 
-        int index7 = cursor.getColumnIndex(QuizDbHelper.IS_LOGGED_IN);
-        Boolean isLoggedIn = cursor.getInt(index7) > 0;
+        int index7 = cursor.getColumnIndex(QuizDbHelper.TOKEN_EXPIRATION_TIME_IN_SECONDS);
+        Date tokenExpirationDate = new Date(cursor.getLong(index7));
 
-        return new UserInfo(firstName,lastName,userName,email,token,tokenExpirationDate,isLoggedIn);
+        int index8 = cursor.getColumnIndex(QuizDbHelper.IS_LOGGED_IN);
+        Boolean isLoggedIn = cursor.getInt(index8) > 0;
+
+        return new UserInfo(firstName, lastName, userName, correctAnswers, totalAnswers, token, tokenExpirationDate, isLoggedIn);
     }
 
     private static class QuizDbHelper extends SQLiteOpenHelper {
 
         private static final int DATABASE_VERSION = 1;
-        private static final String DATABASE_NAME = "AndiQuizDb";
+        private static final String DATABASE_NAME = "AndiQuizDb123412";
         private static final String TABLE_NAME = "UserInfo";
 
         private static final String UID = "_id";
         private static final String FIRST_NAME = "FirstName";
         private static final String LAST_NAME = "LastName";
         private static final String USERNAME = "UserName";
-        private static final String EMAIL = "Email";
+        private static final String CORRECT_ANSWERS = "CorrectAnswers";
+        private static final String TOTAL_ANSWERS = "TotalAnswers";
         private static final String TOKEN = "Token";
         private static final String TOKEN_EXPIRATION_TIME_IN_SECONDS = "TokenExpirationDate";
         private static final String IS_LOGGED_IN = "IsLoggedIn";
@@ -140,7 +149,8 @@ public class QuizDbAdapter {
                 " " + FIRST_NAME + " NVARCHAR (100)," +
                 " " + LAST_NAME + " NVARCHAR (100)," +
                 " " + USERNAME + " NVARCHAR (100)," +
-                " " + EMAIL + " NVARCHAR (100)," +
+                " " + CORRECT_ANSWERS + " INTEGER," +
+                " " + TOTAL_ANSWERS + " INTEGER," +
                 " " + TOKEN + " VARCHAR (255)," +
                 " " + TOKEN_EXPIRATION_TIME_IN_SECONDS + " DATETIME," +
                 " " + IS_LOGGED_IN + " BOOLEAN)";
