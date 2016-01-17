@@ -44,7 +44,8 @@
         </activity>
         <activity android:name=".ProfileActivity" />
         <activity android:name=".QuizActivity" />
-        <activity android:name=".FindQuizActivity"></activity>
+        <activity android:name=".FindQuizActivity" />
+        <activity android:name=".QuizQuistionsActivity"></activity>
     </application>
 
 </manifest>
