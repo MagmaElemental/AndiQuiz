@@ -1,0 +1,63 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/profileImage"
+        android:layout_gravity="center_horizontal|bottom"
+        android:contentDescription="image" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Profile"
+        android:id="@+id/tvProfile" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:id="@+id/btn_update_image"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Update Your Image"
+            android:onClick="updateImage"/>
+
+        <Button
+            android:id="@+id/btn_do_quiz"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Do Quiz"
+            android:onClick="moveToQuiz"/>
+
+        <Button
+            android:id="@+id/btn_find_quiz"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Find Quiz"
+            android:onClick="moveToFindQuiz"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+<!--<android.support.v4.view.PagerTitleStrip-->
+<!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--android:id="@+id/pager_title_strip"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_gravity="top"-->
+<!--android:background="#33b5e5"-->
+<!--android:paddingBottom="4dp"-->
+<!--android:paddingTop="4dp"-->
+<!--android:textColor="#fff"/>-->

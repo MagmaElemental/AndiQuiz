@@ -42,6 +42,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.magmaelemental.andiquiz.LoginActivity" />
         </activity>
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".QuizActivity" />
+        <activity android:name=".FindQuizActivity"></activity>
     </application>
 
 </manifest>

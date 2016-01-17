@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         //moveToLogin(view);
 
         // if there is user and TOKEN
-        // moveToProfile(view)
+        //moveToProfile(view);
 
         // if no user
         // moveToRegister(view)
