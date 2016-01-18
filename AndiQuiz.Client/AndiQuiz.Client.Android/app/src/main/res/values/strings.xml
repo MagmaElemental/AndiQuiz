@@ -53,4 +53,9 @@
     <string name="choose_category">Choose By Category</string>
     <string name="play_quiz">Play Quiz!</string>
     <string name="show_recent_quizzes">Show Recent Quizzes</string>
+    <string name="my_profile">My Profile</string>
+    <string name="search">Search</string>
+    <string name="list_item_category_name">Category Name:</string>
+    <string name="list_item_category_quizzes">Quizzes in Category:</string>
+    <string name="categories" >Categories:</string>
 </resources>

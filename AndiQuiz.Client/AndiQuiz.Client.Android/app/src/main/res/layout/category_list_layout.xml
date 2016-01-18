@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/category_list_pattern"
+    android:layout_width="fill_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:padding="6dip">
+
+    <TextView
+        android:id="@+id/labelCategoryName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="@string/list_item_category_name"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/categoryName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/labelCategoryName"
+        android:gravity="center_vertical"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/labelCategoryQuizzes"
+        android:layout_width="fill_parent"
+        android:layout_below="@id/categoryName"
+        android:layout_height="350dip"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="@string/list_item_category_quizzes"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/categoryQuizzes"
+        android:layout_width="fill_parent"
+        android:layout_below="@id/labelCategoryQuizzes"
+        android:layout_height="350dip"
+        android:height="12sp"
+        android:ellipsize="marquee"
+        android:singleLine="true"/>
+</RelativeLayout>

@@ -31,7 +31,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".RegisterActivity"
             android:label="AndiQuiz · Register"
@@ -44,6 +43,7 @@
         <activity android:name=".QuizActivity" />
         <activity android:name=".FindQuizActivity" />
         <activity android:name=".QuizQuistionsActivity" />
+        <activity android:name=".CategoriesActivity"></activity>
     </application>
 
 </manifest>

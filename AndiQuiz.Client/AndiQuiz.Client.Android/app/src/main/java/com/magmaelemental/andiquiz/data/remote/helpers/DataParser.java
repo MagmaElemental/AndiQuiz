@@ -1,10 +1,14 @@
 package com.magmaelemental.andiquiz.data.remote.helpers;
 
 import com.magmaelemental.andiquiz.data.remote.models.AccessToken;
+import com.magmaelemental.andiquiz.data.remote.models.CategoryDetails;
 import com.magmaelemental.andiquiz.data.remote.models.UserPersonalDetails;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class DataParser {
 
@@ -39,5 +43,19 @@ public class DataParser {
         UserPersonalDetails personalDetails = new UserPersonalDetails(firstName,lastName,correct,total);
 
         return personalDetails;
+    }
+
+    public static ArrayList<CategoryDetails> GetCategoriesFromJson(String categoriesJsonObject) throws JSONException {
+        JSONArray array = new JSONArray(categoriesJsonObject);
+        Integer length = array.length();
+        ArrayList<CategoryDetails> categories = new ArrayList<CategoryDetails>();
+        for (int i = 0; i < length; i++) {
+            JSONObject categoryJsonObject = array.getJSONObject(i);
+            String name = categoryJsonObject.getString("Name");
+            String quizzesCount = categoryJsonObject.getString("Quizzes");
+            categories.add(new CategoryDetails(name, quizzesCount));
+        }
+
+        return categories;
     }
 }

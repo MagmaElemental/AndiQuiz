@@ -2,13 +2,11 @@ package com.magmaelemental.andiquiz;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.magmaelemental.andiquiz.data.local.QuizDbAdapter;
 import com.magmaelemental.andiquiz.data.local.UserInfo;
@@ -26,6 +24,14 @@ public class MainActivity extends AppCompatActivity {
 
         dbAdapter = new QuizDbAdapter(this);
     }
+
+    private View.OnClickListener categoriesButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(v.getContext(), CategoriesActivity.class);
+            startActivity(intent);
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
