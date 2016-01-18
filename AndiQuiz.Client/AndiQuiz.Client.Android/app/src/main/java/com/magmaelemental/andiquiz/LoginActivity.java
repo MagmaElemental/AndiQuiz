@@ -26,6 +26,7 @@ import com.magmaelemental.andiquiz.data.remote.FetchDataTask;
 import com.magmaelemental.andiquiz.data.remote.helpers.DataParser;
 import com.magmaelemental.andiquiz.data.remote.models.AccessToken;
 import com.magmaelemental.andiquiz.data.remote.models.UserPersonalDetails;
+import com.magmaelemental.andiquiz.services.ReminderService;
 
 import org.json.JSONException;
 
@@ -51,6 +52,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // adding notifier as a service
+        startService(new Intent(this, ReminderService.class));
 
         UserInfo lastUserInfo = dbAdapter.getLastDataEntry();
         // check if we should update his token
