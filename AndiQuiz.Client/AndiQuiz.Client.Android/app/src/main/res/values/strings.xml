@@ -32,7 +32,6 @@
     <string name="action_sign_in_short">Sign in</string>
 
 
-
     <!-- Data Strings -->
     <string name="error_wrong_input">Oops. No such data, please try again!</string>
     <string name="error_app_crash">Oops. Something bad happened, please try again!</string>
@@ -48,4 +47,10 @@
     <string name="error_invalid_email">Invalid Email!</string>
     <string name="success_user_register">User registered successfully!</string>
     <string name="action_log_out">Log Out</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="choose_category">Choose By Category</string>
+    <string name="play_quiz">Play Quiz!</string>
+    <string name="show_recent_quizzes">Show Recent Quizzes</string>
 </resources>

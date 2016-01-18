@@ -1,0 +1,40 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/play_quiz"
+            android:textSize="60sp"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/action_choose_category"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:text="@string/choose_category"
+            android:textSize="40sp"/>
+
+        <Button
+            android:id="@+id/action_show_recent"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/show_recent_quizzes"
+            android:layout_margin="20dp"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+</RelativeLayout>
