@@ -7,18 +7,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.magmaelemental.andiquiz.data.local.QuizDbAdapter;
+import com.magmaelemental.andiquiz.data.local.UserInfo;
 
 public class ProfileActivity extends AppCompatActivity {
 
     int myRequestCode = 1234;
     ImageView imageView;
+    TextView tvFirstName;
+    TextView tvLastName;
+    private static QuizDbAdapter dbAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        dbAdapter = new QuizDbAdapter(this);
+
+        UserInfo lastUserInfo = dbAdapter.getLastDataEntry();
+
         imageView = (ImageView) this.findViewById(R.id.photo_taken);
+
+        tvFirstName = (TextView) this.findViewById(R.id.tvFirstName);
+        tvFirstName.setText(lastUserInfo.getFirstName());
+
+        tvLastName = (TextView) this.findViewById(R.id.tvLastName);
+        tvLastName.setText(lastUserInfo.getLastName());
     }
 
     public void moveToFindQuiz(View view) {

@@ -58,4 +58,7 @@
     <string name="list_item_category_name">Category Name:</string>
     <string name="list_item_category_quizzes">Quizzes in Category:</string>
     <string name="categories" >Categories:</string>
+    <string name="updateImage">Update Your Image</string>
+    <string name="doQuiz">Do Quiz</string>
+    <string name="findQuiz">Find Quiz</string>
 </resources>
