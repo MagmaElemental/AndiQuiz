@@ -12,8 +12,9 @@ public class UserInfo {
     private String Token;
     private Date TokenExpirationDate;
     private Boolean IsLoggedIn;
+    private String ImagePath;
 
-    public UserInfo(String firstName, String lastName, String userName, Integer correctAnswers, Integer totalAnswers, String token, Date tokenExpirationDate, Boolean isLoggedIn) {
+    public UserInfo(String firstName, String lastName, String userName, Integer correctAnswers, Integer totalAnswers, String token, Date tokenExpirationDate, Boolean isLoggedIn, String imagePath) {
         this.FirstName = firstName;
         this.LastName = lastName;
         this.UserName = userName;
@@ -22,6 +23,7 @@ public class UserInfo {
         this.Token = token;
         this.TokenExpirationDate = tokenExpirationDate;
         this.IsLoggedIn = isLoggedIn;
+        this.ImagePath = imagePath;
     }
 
     public String getFirstName() {
@@ -54,5 +56,13 @@ public class UserInfo {
 
     public Boolean getIsLoggedIn() {
         return IsLoggedIn;
+    }
+
+    public String getImagePath() {
+        return ImagePath;
+    }
+
+    public void setImagePath(String value) {
+        this.ImagePath = value;
     }
 }

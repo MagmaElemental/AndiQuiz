@@ -3,6 +3,7 @@ package com.magmaelemental.andiquiz;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
@@ -29,6 +30,7 @@ import com.magmaelemental.andiquiz.data.remote.models.UserPersonalDetails;
 
 import org.json.JSONException;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -46,13 +48,22 @@ public class LoginActivity extends AppCompatActivity {
     private final QuizDbAdapter dbAdapter = new QuizDbAdapter(this);
     private Button registerButton;
     private AccessToken accessToken;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        UserInfo lastUserInfo = dbAdapter.getLastDataEntry();
+        // create SQLite table if not exists
+        //dbAdapter.createTable();
+
+        UserInfo lastUserInfo = null;
+
+        if (doesDatabaseExist(this, dbAdapter.getDbName())){
+            lastUserInfo = dbAdapter.getLastDataEntry();
+        }
+
         // check if we should update his token
         if (lastUserInfo != null && lastUserInfo.getIsLoggedIn()) {
             Date todaysDate = new Date(System.currentTimeMillis());
@@ -101,6 +112,11 @@ public class LoginActivity extends AppCompatActivity {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+    }
+
+    private static boolean doesDatabaseExist(Context context, String dbName) {
+        File dbFile = context.getDatabasePath(dbName);
+        return dbFile.exists();
     }
 
     private void attemptLogin() {
@@ -152,7 +168,8 @@ public class LoginActivity extends AppCompatActivity {
                                             personalDetails.getTotalAnswers(),
                                             accessToken.getToken(),
                                             accessToken.getExpiresInSeconds(),
-                                            true);
+                                            true,
+                                            null);
                                 } catch (JSONException e) {
                                     Toast.makeText(LoginActivity.this, getString(R.string.error_app_crash), Toast.LENGTH_SHORT).show();
                                 }

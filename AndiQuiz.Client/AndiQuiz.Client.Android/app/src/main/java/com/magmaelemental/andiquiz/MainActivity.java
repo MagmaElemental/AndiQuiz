@@ -58,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
                     lastUserInfo.getTotalAnswers(),
                     "",
                     0,
-                    false
+                    false,
+                    lastUserInfo.getImagePath()
             );
         }
 

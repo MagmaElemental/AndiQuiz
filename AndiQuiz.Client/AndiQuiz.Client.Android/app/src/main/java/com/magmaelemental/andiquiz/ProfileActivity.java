@@ -1,7 +1,9 @@
 package com.magmaelemental.andiquiz;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +13,10 @@ import android.widget.TextView;
 
 import com.magmaelemental.andiquiz.data.local.QuizDbAdapter;
 import com.magmaelemental.andiquiz.data.local.UserInfo;
+
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -36,6 +42,10 @@ public class ProfileActivity extends AppCompatActivity {
 
         tvLastName = (TextView) this.findViewById(R.id.tvLastName);
         tvLastName.setText(lastUserInfo.getLastName());
+
+        imageView = (ImageView) this.findViewById(R.id.photo_taken);
+
+        imageView.setImageURI(Uri.parse(lastUserInfo.getImagePath()));
     }
 
     public void moveToFindQuiz(View view) {
@@ -61,6 +71,9 @@ public class ProfileActivity extends AppCompatActivity {
         if (requestCode == myRequestCode && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+            // get image path
+            dbAdapter.insertImagePath((String) extras.get("EXTRA_OUTPUT"));
 
             imageView = (ImageView) this.findViewById(R.id.photo_taken);
             imageView.setImageBitmap(imageBitmap);

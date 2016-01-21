@@ -23,7 +23,8 @@ public class QuizDbAdapter {
             QuizDbHelper.TOTAL_ANSWERS,
             QuizDbHelper.TOKEN,
             QuizDbHelper.TOKEN_EXPIRATION_TIME_IN_SECONDS,
-            QuizDbHelper.IS_LOGGED_IN
+            QuizDbHelper.IS_LOGGED_IN,
+            QuizDbHelper.IMAGE_PATH
     };
 
     QuizDbHelper helper;
@@ -39,7 +40,8 @@ public class QuizDbAdapter {
                            Integer totalAnswers,
                            String token,
                            Integer tokenExpirationTimeInSeconds,
-                           Boolean isLoggedIn) {
+                           Boolean isLoggedIn,
+                           String imagePath) {
         Calendar calendar = Calendar.getInstance(); // gets a calendar using the default time zone and locale.
         calendar.add(Calendar.SECOND, tokenExpirationTimeInSeconds);
         Date date = calendar.getTime();
@@ -54,6 +56,7 @@ public class QuizDbAdapter {
         contentValues.put(QuizDbHelper.TOKEN, token);
         contentValues.put(QuizDbHelper.TOKEN_EXPIRATION_TIME_IN_SECONDS, date.getTime());
         contentValues.put(QuizDbHelper.IS_LOGGED_IN, isLoggedIn);
+        contentValues.put(QuizDbHelper.IMAGE_PATH, imagePath);
 
         long id = db.insert(QuizDbHelper.TABLE_NAME, null, contentValues);
         return id;
@@ -126,7 +129,26 @@ public class QuizDbAdapter {
         int index8 = cursor.getColumnIndex(QuizDbHelper.IS_LOGGED_IN);
         Boolean isLoggedIn = cursor.getInt(index8) > 0;
 
-        return new UserInfo(firstName, lastName, userName, correctAnswers, totalAnswers, token, tokenExpirationDate, isLoggedIn);
+        int index9 = cursor.getColumnIndex(QuizDbHelper.IMAGE_PATH);
+        String imagePath = cursor.getString(index9);
+
+        return new UserInfo(firstName, lastName, userName, correctAnswers, totalAnswers, token, tokenExpirationDate, isLoggedIn, imagePath);
+    }
+
+    public void insertImagePath(String imagePath){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues updatePhoto = new ContentValues();
+        updatePhoto.put(QuizDbHelper.IMAGE_PATH, imagePath);
+        db.insert(QuizDbHelper.TABLE_NAME, null, updatePhoto);
+    }
+
+    public void createTable(){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        helper.onCreate(db);
+    }
+
+    public String getDbName(){
+        return QuizDbHelper.DATABASE_NAME;
     }
 
     private static class QuizDbHelper extends SQLiteOpenHelper {
@@ -144,6 +166,7 @@ public class QuizDbAdapter {
         private static final String TOKEN = "Token";
         private static final String TOKEN_EXPIRATION_TIME_IN_SECONDS = "TokenExpirationDate";
         private static final String IS_LOGGED_IN = "IsLoggedIn";
+        private static final String IMAGE_PATH = null ;
 
         private static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" + UID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " " + FIRST_NAME + " NVARCHAR (100)," +
@@ -153,8 +176,10 @@ public class QuizDbAdapter {
                 " " + TOTAL_ANSWERS + " INTEGER," +
                 " " + TOKEN + " VARCHAR (255)," +
                 " " + TOKEN_EXPIRATION_TIME_IN_SECONDS + " DATETIME," +
-                " " + IS_LOGGED_IN + " BOOLEAN)";
+                " " + IS_LOGGED_IN + " BOOLEAN)" +
+                " " + IMAGE_PATH + " NVARCHAR (150) " ;
         private static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
+
 
         private Context context;
 
