@@ -27,6 +27,7 @@ import com.magmaelemental.andiquiz.data.remote.FetchDataTask;
 import com.magmaelemental.andiquiz.data.remote.helpers.DataParser;
 import com.magmaelemental.andiquiz.data.remote.models.AccessToken;
 import com.magmaelemental.andiquiz.data.remote.models.UserPersonalDetails;
+import com.magmaelemental.andiquiz.services.ReminderService;
 
 import org.json.JSONException;
 
